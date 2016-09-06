@@ -486,6 +486,53 @@
     	<label>Series Title</label>
     	<description iso="true">Name of the series to which a resource belongs</description>
     	<help/>
+			<helper sort="false">
+<option value="Bulletin">Bulletin</option>
+<option value="Australia 1:100 000 geological series">Australia 1:100 000 geological series</option>
+<option value="Australia 1:100 000 regolith-landform series">Australia 1:100 000 regolith-landform series</option>
+<option value="Australia 1:100 000 special geological series">Australia 1:100 000 special geological series</option>
+<option value="Australia 1:100 000 stream-sedimnet geochemistry series">Australia 1:100 000 stream-sedimnet geochemistry series</option>
+<option value="Australia 1:100 000 topographic survey">Australia 1:100 000 topographic survey</option>
+<option value="Australia 1:250 000 basement geology series ">Australia 1:250 000 basement geology series </option>
+<option value="Australia 1:250 000 geological series">Australia 1:250 000 geological series</option>
+<option value="Australia 1:250 000 interpreted geology">Australia 1:250 000 interpreted geology</option>
+<option value="Australia 1:250 000 regolith-landform series">Australia 1:250 000 regolith-landform series</option>
+<option value="Australia 1:250 000 solid geology">Australia 1:250 000 solid geology</option>
+<option value="Australia 1:250 000 total magnetic intensity">Australia 1:250 000 total magnetic intensity</option>
+<option value="Australia 1:250 000 total magnetic intensity pixel map series">Australia 1:250 000 total magnetic intensity pixel map series</option>
+<option value="Australia 1:1 000 000 geophysical interpretation series">Australia 1:1 000 000 geophysical interpretation series</option>
+<option value="1:250 000 geological series - explanatory notes">1:250 000 geological series - explanatory notes</option>
+<option value="1:1 000 000 offshore resource map series">1:1 000 000 offshore resource map series</option>
+<option value="4 mile geological series">4 mile geological series</option>
+<option value="Murray Basin hydrogeological map series">Murray Basin hydrogeological map series</option>
+<option value="National topographic map series">National topographic map series</option>
+<option value="NATMAP topographic 1:25 000 series">NATMAP topographic 1:25 000 series</option>
+<option value="NATMAP topographic map 1:25 000">NATMAP topographic map 1:25 000</option>
+<option value="NATMAP topographic 1:250 000 series : Australia">NATMAP topographic 1:250 000 series : Australia</option>
+<option value="Professional Opinion">Professional Opinion</option>
+<option value="Record">Record</option>
+<option value="Report">Report</option>
+<option value="The Australian Geologist">The Australian Geologist</option>
+<option value="Economic Geology">Economic Geology</option>
+<option value="BMR Research Newsletter">BMR Research Newsletter</option>
+<option value="AGSO Research Newsletter">AGSO Research Newsletter</option>
+<option value="Australian Journal of Earth Sciences">Australian Journal of Earth Sciences</option>
+<option value="Australia 1:1 000 000 general reference topographic map series">Australia 1:1 000 000 general reference topographic map series</option>
+<option value="Australia's Mineral Resource Assessment series">Australia's Mineral Resource Assessment series</option>
+<option value="R502">R502</option>
+<option value="Australian Antarctic Magazine">Australian Antarctic Magazine</option>
+<option value="Educational Booklet">Educational Booklet</option>
+<option value="Australian Maritime Boundaries - Treaties">Australian Maritime Boundaries - Treaties</option>
+<option value="International Map of the World (IMW)">International Map of the World (IMW)</option>
+<option value="Basin Biozonation and Stratigraphy Chart Series">Basin Biozonation and Stratigraphy Chart Series</option>
+<option value="BMR Journal of Australian Geology and Geophysics">BMR Journal of Australian Geology and Geophysics</option>
+<option value="AGSO Journal of Australian Geology and Geophysics">AGSO Journal of Australian Geology and Geophysics</option>
+<option value="Preview">Preview</option>
+<option value="AGU Fall Meeting 2013, 9-13 December 2013">AGU Fall Meeting 2013, 9-13 December 2013</option>
+<option value="Confidential record">Confidential record</option>
+<option value="Journal of Geochemical Exploration">Journal of Geochemical Exploration</option>
+<option value="Marine Geology">Marine Geology</option>
+			</helper>
     	<condition/>
   	</element>
   	<element name="mcc:MD_Scope" id="420.0">
@@ -2536,34 +2583,62 @@
 		<label>Protocol</label>
 		<description>Connection protocol to be used</description>
 		<helper sort="true">
-<option value="OGC:CSW">OGC-CSW Catalogue Service for the Web</option>
-<option value="OGC:KML">OGC-KML Keyhole Markup Language</option>
-<option value="OGC:GML">OGC-GML Geography Markup Language</option>
-<option value="OGC:ODS">OGC-ODS OpenLS Directory Service</option>
-<option value="OGC:OGS">OGC-ODS OpenLS Gateway Service</option>
-<option value="OGC:OUS">OGC-ODS OpenLS Utility Service</option>
-<option value="OGC:OPS">OGC-ODS OpenLS Presentation Service</option>
-<option value="OGC:ORS">OGC-ODS OpenLS Route Service</option>
-<option value="OGC:SOS">OGC-SOS Sensor Observation Service</option>
-<option value="OGC:SPS">OGC-SPS Sensor Planning Service</option>
-<option value="OGC:SAS">OGC-SAS Sensor Alert Service</option>
-<option value="OGC:WCS">OGC-WCS Web Coverage Service</option>
-<option value="OGC:WCTS">OGC-WCTS Web Coordinate Transformation Service</option>
-<option value="OGC:WFS">OGC-WFS Web Feature Service</option>
-<option value="OGC:WMS">OGC-WMS Web Map Service</option>
-<option value="OGC:WNS">OGC-WNS Web Notification Service</option>
-<option value="OGC:WPS">OGC-WPS Web Processing Service</option>
-<option value="WWW:DOWNLOAD-1.0-ftp--download">File for download through FTP</option>
-<option value="WWW:DOWNLOAD-1.0-http--download">File for download</option>
-<option value="FILE:GEO">GIS file</option>
-<option value="FILE:RASTER">GIS RASTER file</option>
-<option value="WWW:LINK-1.0-http--link">Web address (URL)</option>
-<option value="WWW:LINK-1.0-http--rss">RSS News feed (URL)</option>
-<option value="DB:POSTGIS">PostGIS database table</option>
-<option value="DB:ORACLE">ORACLE database table</option>
-<option value="WWW:LINK-1.0-http--opendap">OPeNDAP URL</option>
-<option value="RBNB:DATATURBINE">Data Turbine</option>
-<option value="UKST">Unknown Service Type</option>
+<option value="AIMS">ESRI:AIMS--http--configuration</option>
+<option value="ESRI:AIMS--http--configuration">ArcIMSMapServiceConfigurationFileAXL</option>
+<option value="ESRI:AIMS--http-get-feature">ArcIMSInternetFeatureMapService</option>
+<option value="ESRI:AIMS--http-get-image">ArcIMSInternetImageMapService</option>
+<option value="GLG:KML-2.0-http-get-map">GoogleEarthKMLserviceVer2.0</option>
+<option value="OGC:CSW">OGC-CSWCatalogueServicefortheWeb</option>
+<option value="OGC:KML">OGC-KMLKeyholeMarkupLanguage</option>
+<option value="OGC:GML">OGC-GMLGeographyMarkupLanguage</option>
+<option value="OGC:ODS">OGC-ODSOpenLSDirectoryService</option>
+<option value="OGC:OGS">OGC-ODSOpenLSGatewayService</option>
+<option value="OGC:OUS">OGC-ODSOpenLSUtilityService</option>
+<option value="OGC:OPS">OGC-ODSOpenLSPresentationService</option>
+<option value="OGC:ORS">OGC-ODSOpenLSRouteService</option>
+<option value="OGC:SOS">OGC-SOSSensorObservationService</option>
+<option value="OGC:SPS">OGC-SPSSensorPlanningService</option>
+<option value="OGC:SAS">OGC-SASSensorAlertService</option>
+<option value="OGC:WCS">OGC-WCSWebCoverageService</option>
+<option value="OGC:WCS-1.1.0-http-get-capabilities">OGC-WCSWebCoverageServicever1.1.0</option>
+<option value="OGC:WCTS">OGC-WCTSWebCoordinateTransformationService</option>
+<option value="OGC:WFS">OGC-WFSWebFeatureService</option>
+<option value="OGC:WFS-1.0.0-http-get-capabilities">OGC-WFSWebFeatureServiceVer1.0.0</option>
+<option value="OGC:WFS-G">OGC-WFS-GGazzetteerService</option>
+<option value="OGC:WMC-1.1.0-http-get-capabilities">OGC-WMCWebMapContextVer1.1</option>
+<option value="OGC:WMS">OGC-WMSWebMapService</option>
+<option value="OGC:WMS-1.1.1-http-get-capabilities">OGC-WMSCapabilitiesserviceVer1.1.1</option>
+<option value="OGC:WMS-1.3.0-http-get-capabilities">OGC-WMSCapabilitiesserviceVer1.3.0</option>
+<option value="OGC:WMS-1.1.1-http-get-map">OGCWebMapServiceVer1.1.1</option>
+<option value="OGC:WMS-1.3.0-http-get-map">OGCWebMapServiceVer1.3.0</option>
+<option value="OGC:SOS-1.0.0-http-get-observation">OGC-SOSGetObservationVer1.0.0</option>
+<option value="OGC:SOS-1.0.0-http-post-observation">OGC-SOSGetObservationPOSTVer1.0.0</option>
+<option value="OGC:WNS">OGC-WNSWebNotificationService</option>
+<option value="OGC:WPS">OGC-WPSWebProcessingService</option>
+<!-- These aren't applicable to eCat
+<option value="WWW:DOWNLOAD-1.0-ftp- -download">FilefordownloadthroughFTP</option>
+<option value="WWW:DOWNLOAD-1.0-http- -download">Filefordownload</option>
+-->
+<option value="FILE:GEO">GISfile</option>
+<option value="FILE:RASTER">GISRASTERfile</option>
+<option value="WWW:LINK-1.0-http--ical">iCalendarURL</option>
+<option value="WWW:LINK-1.0-http--link">WebaddressURL</option>
+<option value="WWW:LINK-1.0-http--partners">PartnerwebaddressURL</option>
+<option value="WWW:LINK-1.0-http--related">RelatedlinkURL</option>
+<option value="WWW:LINK-1.0-http--rss">RSSNewsfeedURL</option>
+<option value="WWW:LINK-1.0-http--samples">ShowcaseproductURL</option>
+<option value="DB:POSTGIS">PostGISdatabasetable</option>
+<option value="DB:ORACLE">ORACLEdatabasetable</option>
+<option value="WWW:LINK-1.0-http--opendap">OPeNDAPURL</option>
+<option value="RBNB:DATATURBINE">DataTurbine</option>
+<option value="UKST">UnknownServiceType</option>
+<option value="URN:JETSTREAM-PROXY">FilefordownloadthroughJetstreamProxy</option>
+<option value="OGC:WFS-1.1.0-http-get-capabilities">OGC-WFSWebFeatureServiceVer1.1.0</option>
+<option value="OGC:WCS-1.0.0-http-get-capabilities">OGC-WCSWebCoverageServiceVer1.0.0</option>
+<option value="ESRI: Map Service">ESRI ArcGIS Map Service</option>
+<option value="ESRI: Image Service">ESRI ArcGIS Image Service</option>
+<option value="ESRI: Geoprocessing Service">ESRI ArcGIS Geoprocessing Service</option>
+<option value="ESRI: Services Directory Page">ESRI ArcGIS Services Directory Page</option>
 		</helper>
 	</element>
 	<element name="mri:purpose" id="26.0">
@@ -2669,7 +2744,7 @@
     <description>Angular sampling measure</description>
   </element>
   <element name="mri:levelOfDetail">
-    <label>Level of detail</label>
+    <label>Spatial resolution / Scale</label>
     <description>Brief textual description of the spatial resolution of the resource</description>
   </element>
   <element name="mri:MD_Resolution_Type">
@@ -2831,7 +2906,7 @@
 		<label>Specification</label>
 	</element>
 	<element name="mrl:statement" id="83.0">
-		<label>Statement</label>
+		<label>Lineage statement</label>
 		<description>General explanation of the data producer_s knowledge about the lineage of a
             dataset</description>
 		<condition>conditional</condition>
@@ -3249,21 +3324,28 @@
 	<element name="srv:SV_ParameterDirection">
 		<label>Parameter direction</label>
 	</element>
-	<element name="srv:serviceType"><!-- readonly="true" -->
+	<element name="srv:serviceType" context="srv:SV_ServiceIdentification">
 		<label>Service Type</label>
 		<description>Service type name from a registry of services. For example, the values of the
             nameSpace and name attributes of GeneralName may be 'OGC' and 'catalogue'</description>
-		<helper>
+		<helper sort="true">
 			<option value="OGC:WMS">OGC Web Map Service (OGC:WMS)</option>
 			<option value="OGC:WFS">OGC Web Feature Service (OGC:WFS)</option>
 			<option value="OGC:WCS">OGC Web Coverage Service (OGC:WCS)</option>
 			<option value="W3C:HTML:DOWNLOAD">Download (W3C:HTML:DOWNLOAD)</option>
-			<option value="W3C:HTML:LINK">Information (W3C:HTML:LINK)</option>
-			<!--INSPIRE Service type defined in MD IR / 1.3.1 Spatial data service 
-				type <option value="discovery">Discovery Service (discovery)</option> <option 
-				value="view">View Service (view)</option> <option value="download">Download 
-				Service (download)</option> <option value="transformation">Transformation 
-				Service (transformation)</option> <option value="other">Other Services (other)</option> -->
+			<option value="W3C:HTML:INFORMATION">Information (W3C:HTML:Information)</option>
+			<option value="ESRI:ArcGIS:MapServer">ESRI Map Service (ESRI:ArcGIS:MapService)</option>
+			<option value="ESRI:ArcIMS">ESRI ArcIMS Service (ESRI:ArcIMS)</option>
+			<option value="ESRI:ArcGIS:GPServer">ESRI ArcGIS GP Server (ESRI:ArcGIS:GPServer)</option>
+			<option value="ESRI:ArcGIS:ImageServer">ESRI ArcGIS Image Server (ESRI:ArcGIS:ImageServer)</option>
+			<option value="OGC:CSW">OGC Catalogue Service for the Web (OGC:CSW)</option>
+			<option value="OGC:SOS">OGC Sensor Observation Service (OGC:SOS)</option>
+			<option value="OGC:WMTS">OGC Web Map Tile Service (OGC:WMTS)</option>
+			<option value="OGC:WPS">OGC Web Processing Service (OGC:WPS)</option>
+			<option value="OPeNDAP:OPeNDAP">OPeNDAP root URL (OPeNDAP:OPeNDAP)</option>
+
+
+
 		</helper>
 	</element>
 	<element name="srv:serviceTypeVersion">
@@ -3284,7 +3366,7 @@
             generated by the service</description>
 	</element>
 	<element name="srv:containsOperations">
-		<label>Contains Operations</label>
+		<label>Operation</label>
 		<description>Provides information about the operations that comprise the
             service</description>
 	</element>
@@ -3300,8 +3382,8 @@
 		<label>Operation</label>
 		<description>Operation Metadata</description>
 	</element>
-	<element name="srv:DCP">
-		<label>Distributed Computing Platforms</label>
+	<element name="srv:distributedComputingPlatform">
+		<label>Computing Platform</label>
 		<description>Distributed computing platforms on which the operation has been
             implemented</description>
 	</element>
@@ -3318,6 +3400,10 @@
 	<element name="srv:parameters">
 		<label>Parameters</label>
 		<description>The parameters that are required for this interface</description>
+	</element>
+	<element name="srv:parameter">
+		<label>Parameter</label>
+		<description>Parameter required for this interface</description>
 	</element>
 	<element name="srv:SV_Parameter">
 		<label>Parameter</label>

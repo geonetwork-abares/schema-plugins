@@ -9,16 +9,14 @@
   xmlns:gts="http://www.isotc211.org/2005/gts"
   xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:gn="http://www.fao.org/geonetwork"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
   exclude-result-prefixes="#all">
 
 
-  <!-- Readonly elements
-  [parent::mdb:metadataIdentifier and
-                        mcc:codeSpace/gco:CharacterString='urn:uuid']|
-                      mdb:dateInfo/cit:CI_Date[cit:dateType/cit:CI_DateTypeCode
-                        /@codeListValue='revision']
--->
+  <!-- Readonly elements - the rules in this template
+       will only match if the element at the root of the xpath is used
+			 in config-editor.xml -->
   <xsl:template mode="mode-iso19115-3"
                 match="mdb:metadataIdentifier/mcc:MD_Identifier/mcc:code|
                        mdb:metadataIdentifier/mcc:MD_Identifier/mcc:codeSpace|
@@ -52,6 +50,32 @@
 
   </xsl:template>
 
+  <!-- Readonly element - alternativeMetadataReference for eCatId
+       will only match if the element at the root of the xpath is used
+			 in config-editor.xml -->
+  <xsl:template mode="mode-iso19115-3"
+                match="mdb:alternativeMetadataReference[cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:codeSpace/gco:CharacterString='http://www.ga.gov.au/eCatId']"
+                priority="2000">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+		<xsl:for-each select="cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code">
+
+    	<xsl:call-template name="render-element">
+      	<xsl:with-param name="label" select="'eCat ID'"/>
+      	<xsl:with-param name="value" select="gco:CharacterString"/>
+      	<xsl:with-param name="cls" select="local-name()"/>
+      	<xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+      	<xsl:with-param name="type" select="gn-fn-metadata:getFieldType($editorConfig, name(), '')"/>
+      	<xsl:with-param name="name" select="'eCat ID'"/>
+      	<xsl:with-param name="editInfo" select="*/gn:element"/>
+      	<xsl:with-param name="parentEditInfo" select="gn:element"/>
+      	<xsl:with-param name="isDisabled" select="true()"/>
+    	</xsl:call-template>
+
+		</xsl:for-each>
+
+  </xsl:template>
 
   <!-- Duration
 
@@ -224,6 +248,61 @@
         </xsl:apply-templates>
       </xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+
+	<!-- Show xlink'd individuals and contacts -->
+	<xsl:template mode="party-html" match="cit:individual">
+		<ul>
+			<li style="list-style-type: none;">
+				<xsl:if test="normalize-space(descendant::cit:name/gco:CharacterString)">
+				  <xsl:value-of select="string(descendant::cit:name/gco:CharacterString)"/>
+				  <xsl:if test="normalize-space(descendant::cit:positionName/gco:CharacterString)">
+						<xsl:value-of select="', '"/>
+					</xsl:if>
+				</xsl:if>
+				<xsl:if test="normalize-space(descendant::cit:positionName/gco:CharacterString)">
+					<xsl:value-of select="descendant::cit:positionName/gco:CharacterString"/>
+				</xsl:if>
+			</li>
+		</ul>
+	</xsl:template>
+
+	<xsl:template mode="party-html" match="cit:contactInfo">
+		<xsl:param name="organisationName"/>
+
+		<ul>
+			<li style="list-style-type: none;"><xsl:value-of select="$organisationName"/></li>
+			<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:deliveryPoint/gco:CharacterString"/></li>
+			<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:city/gco:CharacterString"/></li>
+			<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:administrativeArea/gco:CharacterString"/></li>
+			<li style="list-style-type: none;"><xsl:value-of select="concat(descendant::cit:country/gco:CharacterString,' ',descendant::cit:postalCode/gco:CharacterString)"/></li>
+			<xsl:if test="normalize-space(descendant::cit:electronicMailAddress/gco:CharacterString)">
+				<li style="list-style-type: none;"><xsl:value-of select="concat('Email: ',descendant::cit:electronicMailAddress/gco:CharacterString)"/></li>
+			</xsl:if>
+			<xsl:if test="normalize-space(descendant::cit:voice/gco:CharacterString)">
+				<li style="list-style-type: none;"><xsl:value-of select="concat('Phone: ',descendant::cit:voice/gco:CharacterString)"/></li>
+			</xsl:if>
+		</ul>
+	</xsl:template>
+
+  <!-- XLINK'd cit:party 
+	 eg. <cit:party xlink:href="http://test.cmar.csiro.au:80/geonetwork/srv/eng/subtemplate?uuid=urn:marlin.csiro.au:person:958_person_organisation&amp;process=undefined">
+	       ....
+	     </cit:party>
+	-->
+  <xsl:template mode="mode-iso19115-3" match="mri:pointOfContact[@xlink:href!='']|mdb:contact[@xlink:href!='']" priority="33000">
+    <xsl:param name="schema" select="'iso19115-3'" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
+		<xsl:variable name="organisationName" select="*/cit:party/*/cit:name/*"/>
+		<fieldset>
+			<legend><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(), $labels)/label"/></legend>
+			<xsl:apply-templates mode="party-html" select="*/cit:party/*/cit:individual"/>
+				<!-- NOTE: Show only the first address in the contact info SP Nov. 2015 -->
+			<xsl:apply-templates mode="party-html" select="*/cit:party/*/cit:contactInfo[1]">
+				<xsl:with-param name="organisationName" select="$organisationName"/>
+			</xsl:apply-templates>
+		</fieldset>
   </xsl:template>
 
 

@@ -68,6 +68,33 @@
     <suggest name="cit:CI_Individual"/>
   </field>
 	
+  <field name="cit:CI_Citation">
+    <suggest name="cit:title"/>
+    <suggest name="cit:date"/>
+    <suggest name="cit:edition"/>
+    <suggest name="cit:editionDate"/>
+    <suggest name="cit:citedResponsibleParty"/>
+    <suggest name="cit:series"/>
+    <suggest name="cit:ISBN"/>
+  </field>
+	
+  <field name="cit:CI_Series">
+    <suggest name="cit:name"/>
+    <suggest name="cit:issueIdentification"/>
+  </field>
+
+  <field name="mrl:LI_Lineage">
+    <suggest name="mrl:statement"/>
+    <suggest name="mrl:scope"/>
+    <suggest name="mrl:source"/>
+  </field>
+	
+  <field name="mrl:LI_Source">
+    <suggest name="mrl:description"/>
+    <suggest name="mrl:sourceSpatialResolution"/>
+    <suggest name="mrl:scope"/>
+	</field>
+
 	<field name="cit:CI_Individual">
 		<suggest name="cit:name"/>
     <suggest name="cit:contactInfo"/>
@@ -96,6 +123,7 @@
   <field name="cit:CI_Contact">
     <suggest name="cit:phone"/>
     <suggest name="cit:address"/>
+    <suggest name="cit:contactInstructions"/>
   </field>
 	
 	<field name="cit:CI_Telephone">

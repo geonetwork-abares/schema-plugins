@@ -139,28 +139,29 @@
     </gmd:fileIdentifier>
   </xsl:template>
   
-  
   <xsl:template match="mdb:defaultLocale" priority="5">
     <gmd:language>
       <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/"
-        codeListValue="{lan:PT_Locale/lan:language/lan:LanguageCode}"/>
+        codeListValue="{lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue}"/>
     </gmd:language>
     <gmd:characterSet>
       <gmd:MD_CharacterSetCode 
-        codeListValue="{lan:PT_Locale/lan:characterEncoding/lan:MD_CharacterSetCode}"
+        codeListValue="{lan:PT_Locale/lan:characterEncoding/lan:MD_CharacterSetCode/@codeListValue}"
         codeList="http://www.isotc211.org/namespace/resources/codeList.xml#MD_CharacterSetCode"/>
     </gmd:characterSet>
   </xsl:template>
-  
-  
+
   <xsl:template match="mdb:parentMetadata" priority="5">
     <gmd:parentIdentifier>
       <gco:CharacterString>
-        <xsl:value-of select="@uuidref|cit:CI_Citation/cit:title/gco2:CharacterString"/>
+        <xsl:for-each select="cit:CI_Citation/node()">
+          <xsl:if test="mcc:MD_Identifier[mcc:description/gco2:CharacterString = 'UUID']">
+            <xsl:value-of select="mcc:MD_Identifier/mcc:code/*" />
+          </xsl:if>
+        </xsl:for-each>
       </gco:CharacterString>
     </gmd:parentIdentifier>
   </xsl:template>
-  
 
   <xsl:template match="mdb:metadataScope" priority="5">
     <!-- ISO19139 allows only one -->
@@ -168,7 +169,7 @@
       <gmd:hierarchyLevel>
         <gmd:MD_ScopeCode
             codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode"
-            codeListValue="{mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode}"/>
+            codeListValue="{mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue}"/>
       </gmd:hierarchyLevel>
       <xsl:if test="mdb:MD_MetadataScope/mdb:name">
        <gmd:hierarchyLevelName>
@@ -180,15 +181,11 @@
     </xsl:if>
   </xsl:template>
   
-  
-  <!-- Assume dateStamp is revision date in the source record. Standard says creation
-  but implementations usually use date stamp as revision date. -->
-  <xsl:template match="mdb:dateInfo[cit:CI_Date/cit:dateType/cit:CI_DateTypeCode='revision']" priority="5">
+  <xsl:template match="mdb:dateInfo[cit:CI_Date/cit:dateType/cit:CI_DateTypeCode[@codeListValue='creation']]" priority="5">
     <gmd:dateStamp>
       <xsl:apply-templates select="cit:CI_Date/cit:date/*"/>
     </gmd:dateStamp>
   </xsl:template>
-  
   
   <xsl:template match="mdb:metadataStandard" priority="5">
     <gmd:metadataStandardName>
@@ -202,8 +199,7 @@
       </gco:CharacterString>
     </gmd:metadataStandardVersion>
   </xsl:template>
-  
-  
+
   <xsl:template match="mdb:identificationInfo">
     <gmd:identificationInfo>
       <xsl:apply-templates select="@*"/>
@@ -248,8 +244,8 @@
           <xsl:apply-templates select="mri:spatialResolution"/>
           <!-- This is here to handle early adopters of temporalResolution -->
           <xsl:apply-templates select="mri:temporalResolution"/>
-          <xsl:apply-templates select="mri:language"/>
-          <xsl:apply-templates select="mri:characterSet"/>
+          <xsl:apply-templates select="mri:defaultLocale/lan:PT_Locale/lan:language"/>
+          <xsl:apply-templates select="mri:defaultLocale/lan:PT_Locale/lan:characterEncoding"/>
           <xsl:apply-templates select="mri:topicCategory"/>
 
           <xsl:call-template name="writeCharacterStringElement">
@@ -288,6 +284,19 @@
     </gmd:identificationInfo>
   </xsl:template>
     
+	<!-- Don't copy across gmd:description element, doesn't exist in 139 -->
+  <xsl:template match="mdb:distributionInfo/mrd:MD_Distribution">
+    <gmd:MD_Distribution>
+      <xsl:for-each select="node()">
+        <xsl:choose>
+          <xsl:when test="name()!='mrd:description'" >
+            <xsl:apply-templates select="self::node()"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:for-each>
+    </gmd:MD_Distribution>
+  </xsl:template>
+
   <xsl:template match="srv2:parameter">
     <srv:parameters>
       <xsl:apply-templates select="*"/>
@@ -328,77 +337,36 @@
     </srv:extent>
   </xsl:template>
 
-  <xsl:template match="mdb:dataQualityInfo">
+  <xsl:template match="mdb:resourceLineage">
     <gmd:dataQualityInfo>
       <gmd:DQ_DataQuality>
-        <xsl:if test="mdq:DQ_DataQuality/mdq:scope">
-          <gmd:scope>
-            <xsl:choose>
-              <xsl:when test="mdq:DQ_DataQuality/mdq:scope/@*">
-                <xsl:apply-templates select="mdq:DQ_DataQuality/mdq:scope/@*"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:apply-templates select="mdq:DQ_DataQuality/mdq:scope/mcc:DQ_Scope/*"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </gmd:scope>
-        </xsl:if>
-        
-        <xsl:for-each select="mdq:DQ_DataQuality/mdq:report/*">
-          <gmd:report>
-            <xsl:element name="{concat('gmd:',local-name())}">
-              <xsl:call-template name="writeCharacterStringElement">
-                <xsl:with-param name="elementName" select="'gmd:nameOfMeasure'"/>
-                <xsl:with-param name="nodeWithStringToWrite" select="mdq:measure/mdq:DQ_MeasureReference/mdq:nameOfMeasure"/>
-              </xsl:call-template>
-              <xsl:apply-templates select="mdq:measure/mdq:DQ_MeasureReference/mdq:measureIdentification"/>
-              <xsl:call-template name="writeCharacterStringElement">
-                <xsl:with-param name="elementName" select="'gmd:measureDescription'"/>
-                <xsl:with-param name="nodeWithStringToWrite" select="mdq:measure/mdq:DQ_MeasureReference/mdq:measureDescription"/>
-              </xsl:call-template>
-              
-              
-              <xsl:call-template name="writeCodelistElement">
-                <xsl:with-param name="elementName" select="'gmd:evaluationMethodType'"/>
-                <xsl:with-param name="codeListName" select="'gmd:DQ_EvaluationMethodTypeCode'"/>
-                <xsl:with-param name="codeListValue" select="mdq:evaluation/mdq:DQ_FullInspection/mdq:evaluationMethodType/mdq:DQ_EvaluationMethodTypeCode "/>
-              </xsl:call-template>
-              
-              <xsl:call-template name="writeCharacterStringElement">
-                <xsl:with-param name="elementName" select="'gmd:evaluationMethodDescription'"/>
-                <xsl:with-param name="nodeWithStringToWrite" select="mdq:evaluation/mdq:DQ_FullInspection/mdq:evaluationMethodDescription"/>
-              </xsl:call-template>
-              
-              <gmd:evaluationProcedure>
-                <xsl:apply-templates select="mdq:evaluation/mdq:DQ_FullInspection/mdq:evaluationProcedure/cit:CI_Citation"/>
-              </gmd:evaluationProcedure>
-              <gmd:dateTime>
-                <xsl:apply-templates select="mdq:evaluation/mdq:DQ_FullInspection/mdq:dateTime/gco2:DateTime"/>
-              </gmd:dateTime>
-              <xsl:apply-templates select="mdq:result"/>
-            </xsl:element>
-          </gmd:report>
-        </xsl:for-each>
-        
-        
-        <xsl:for-each select="/*/mdb:resourceLineage">
+        <xsl:if test="mrl:LI_Lineage">
+          <xsl:choose>
+            <xsl:when test="mrl:LI_Lineage/mrl:scope/mcc:MD_Scope">
+              <gmd:scope>
+                <gmd:DQ_Scope>
+                  <xsl:apply-templates select="mrl:LI_Lineage/mrl:scope/mcc:MD_Scope/*"/>
+                </gmd:DQ_Scope>
+              </gmd:scope>
+            </xsl:when>
+          </xsl:choose>
+
           <gmd:lineage>
             <gmd:LI_Lineage>
-              <xsl:call-template name="writeCharacterStringElement">
-                <xsl:with-param name="elementName" select="'gmd:statement'"/>
-                <xsl:with-param name="nodeWithStringToWrite" select="mrl:LI_Lineage/mrl:statement"/>
-              </xsl:call-template>
-              
-              <xsl:apply-templates select="mrl:LI_Lineage/mrl:processStep"/>
-              <xsl:apply-templates select="mrl:LI_Lineage/mrl:source"/>
+              <xsl:for-each select="mrl:LI_Lineage/*">
+                <xsl:choose>
+                  <xsl:when test="name()!='mrl:scope'" >
+                    <xsl:apply-templates select="self::node()"/>
+                  </xsl:when>
+                </xsl:choose>
+              </xsl:for-each>
             </gmd:LI_Lineage>
           </gmd:lineage>
-        </xsl:for-each>
+        </xsl:if>
       </gmd:DQ_DataQuality>
     </gmd:dataQualityInfo>
   </xsl:template>
-  
-  
+
   <xsl:template match="mmi:maintenanceDate">
     <gmd:dateOfNextUpdate>
       <xsl:apply-templates select="cit:CI_Date/cit:date/*"/>
@@ -464,7 +432,7 @@
               <xsl:call-template name="writeCodelistElement">
                 <xsl:with-param name="elementName" select="'gmd:dateType'"/>
                 <xsl:with-param name="codeListName" select="'gmd:CI_DateTypeCode'"/>
-                <xsl:with-param name="codeListValue" select="cit:CI_DateTypeCode"/>
+                <xsl:with-param name="codeListValue" select="cit:CI_DateTypeCode/@codeListValue"/>
               </xsl:call-template>
             </xsl:for-each>
           </gmd:CI_Date>
@@ -865,7 +833,6 @@
                        mdb:metadataProfile|
                        mdb:alternativeMetadataReference|
                        mdb:metadataLinkage|
-                       mdb:resourceLineage|
                        mrl:LI_Source/mrl:scope|
                        mrl:sourceSpatialResolution|
                        mdq:derivedElement" priority="2"/>

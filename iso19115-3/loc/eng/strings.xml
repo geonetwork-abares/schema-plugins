@@ -10,13 +10,13 @@
   <constraintInfo>Access constraint information</constraintInfo>
   <xml_iso19139>Save this metadata as an ISO19139 XML file</xml_iso19139>
   <xml_iso19139Tooai_dc>Save this metadata as an OAI Dublin Core XML file</xml_iso19139Tooai_dc>
-  <resourceLineageTab>Lineage</resourceLineageTab>
 
   <!-- New strings added for the AngularJS editor -->
   <!-- View and tabs -->
-  <advanced>Full</advanced>
-  <default>Simple</default>
-  <simple>Simple</simple>
+  <advanced>Full Standard</advanced>
+  <default>Tabs</default>
+  <services>Services Tabs</services>
+  <simple>Simple Standard</simple>
   <inspire>INSPIRE</inspire>
   <resource>Resource</resource>
   <xml>XML</xml>
@@ -29,7 +29,6 @@
   <referenceSystemInfo>Ref. system</referenceSystemInfo>
   <contentInfo>Content</contentInfo>
   <portrayalCatalogueInfo>Portrayal</portrayalCatalogueInfo>
-  <metadataConstraints>Md. constraints</metadataConstraints>
   <metadataMaintenance>Md. maintenance</metadataMaintenance>
   <applicationSchemaInfo>Schema info</applicationSchemaInfo>
   <acquisitionInformation>Acquisition info</acquisitionInformation>
@@ -42,11 +41,11 @@
 	<pointOfContact>Resource Contact</pointOfContact>
 	<contact>Metadata Contact</contact>
 
+	<source>Source</source>
 	<resourceIdentification>Resource Identification</resourceIdentification>
 
-	<resourceConstraints>Resource Constraints</resourceConstraints>
+	<metadataScope>Type of Resource</metadataScope>
 
-	<resourceExtents>Resource Extents</resourceExtents>
 
 	<resourceQuality>Resource Quality</resourceQuality>
 	<conceptualConsistency>Logical Consistency</conceptualConsistency>
@@ -75,4 +74,44 @@
   <enum2> is not valid for the field </enum2>
   <enum3>List of values is :</enum3>
 
+	<!-- new tabs in default mode -->
+	<resourceCitation>Citation</resourceCitation>
+	<resourceDescription>Description</resourceDescription>
+	<resourceKeywords>Keywords</resourceKeywords>
+	<resourceMaintenance>Maintenance</resourceMaintenance>
+	<constraints>Constraints</constraints>
+	<resourceConstraints>Resource Constraints</resourceConstraints>
+	<metadataConstraints>Metadata Constraints</metadataConstraints>
+	<contacts>Contacts</contacts>
+	<resourceContact>Resource Contacts</resourceContact>
+	<metadataContact>Metadata Contacts</metadataContact>
+	<resourceSpatial>Spatial</resourceSpatial>
+	<resourceExtents>Extents</resourceExtents>
+	<distribution_name>Name</distribution_name>
+	<distribution_version>Version</distribution_version>
+	<resourceType>Type</resourceType>
+        <resourceLineageTab>Lineage</resourceLineageTab>
+        <resourceFormat>Format (admin only)</resourceFormat>
+        <resourceFormatNoTitle></resourceFormatNoTitle>
+        <distribution>Distribution</distribution>
+
+  <useAssociatedResources><span>Add an online resource for distribution using the "<i class="fa fa-link"></i><i class="icon-external-link"></i>Associated resources" panel at the right hand side of the form</span></useAssociatedResources>
+
+	<!-- gaDatasetURI -->
+	<gaDatasetURI>GA Dataset URI</gaDatasetURI>
+
+	<!-- Service stuff -->
+	<serviceDescription>Description</serviceDescription>
+	<serviceType>Service Type</serviceType>
+	<serviceParameter>Parameter</serviceParameter>
+	<containsOperations>Operations</containsOperations>
+	<operation>Operation</operation>
+	<operatesOn>Operates On</operatesOn>
+	<parameter-name>Name</parameter-name>
+	<parameter-direction>Direction</parameter-direction>
+	<parameter-description>Description</parameter-description>
+	<optionality>Optional?</optionality>
+	<repeatability>Repeatable?</repeatability>
+
+  <useAssociatedResourcesForOperatesOn><span>Select metadata records describing datasets that the service operates on using the "<i class="fa fa-link"></i><i class="icon-external-link"></i>Associated resources" panel at the right hand side of the form. Use the "<i class="fa fa-files-o"></i><i class="icon-external-link"></i>Link to a dataset" menu option.</span></useAssociatedResourcesForOperatesOn>
 </strings>

@@ -28,12 +28,13 @@
 
   <xsl:include href="utility-tpl.xsl"/>
   <xsl:include href="layout-custom-fields.xsl"/>
+  <xsl:include href="layout-custom-fields-date.xsl"/>
   <xsl:include href="layout-custom-fields-keywords.xsl"/>
 
   <!-- Visit all XML tree recursively -->
   <xsl:template mode="mode-iso19115-3"
                 match="mdb:*|mcc:*|mri:*|mrs:*|mrd:*|mco:*|msr:*|lan:*|
-                       gcx:*|gex:*|mdq:*|mdq:*|cit:*|srv:*|gml:*|gts:*|
+                       gcx:*|gex:*|mdq:*|cit:*|srv:*|gml:*|gts:*|
 											 mmi:*|mrl:*"
                 priority="2">
     <xsl:param name="schema" select="$schema" required="no"/>
@@ -93,6 +94,8 @@
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
+		<!-- <xsl:message>Boxed: <xsl:value-of select="name()"/></xsl:message> -->
+
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
 
@@ -141,6 +144,8 @@
        gco:Scale|gco:RecordType|gcx:MimeFileType|gco:LocalName]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
+
+		<!-- <xsl:message>Simple: <xsl:value-of select="name()"/></xsl:message> -->
 
     <xsl:variable name="elementName" select="name()"/>
 
@@ -249,27 +254,6 @@
     </xsl:call-template>
   </xsl:template>
 
-	<!-- dates in 19115-3 must be a gco:DateTime - but we will also match gco:Date here and force it to 
-	     gco:DateTime just in case there are any stray gco:Date elements in our 19115-3 records -->
-
-  <xsl:template mode="mode-iso19115-3"
-                priority="200"
-                match="*[gco:Date|gco:DateTime]">
-    <xsl:param name="schema" select="$schema" required="no"/>
-    <xsl:param name="labels" select="$labels" required="no"/>
-
-    <xsl:variable name="labelConfig"
-                  select="gn-fn-metadata:getLabel($schema, name(), $labels)"/>
-
-    <div data-gn-date-picker="{gco:Date|gco:DateTime}"
-         data-label="{$labelConfig/label}"
-         data-element-name="gco:DateTime"
-         data-element-ref="{concat('_X', gn:element/@ref)}"
-				 data-namespaces='{{ "gco": "http://standards.iso.org/iso/19115/-3/gco/1.0", "gml": "http://www.opengis.net/gml/3.2"}}'>
-    </div>
-  </xsl:template>
-
-
   <!--
   <xsl:template mode="mode-iso19115-3" match="*|@*" priority="0"/>
 -->
@@ -280,6 +264,8 @@
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="codelists" select="$codelists" required="no"/>
     <xsl:variable name="elementName" select="name()"/>
+
+		<!-- <xsl:message>Codelist: <xsl:value-of select="name()"/></xsl:message> -->
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
@@ -318,6 +304,9 @@
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="codelists" select="$codelists" required="no"/>
+
+		<!-- <xsl:message>Enumeration: <xsl:value-of select="name()"/></xsl:message> -->
+
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
                       select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', '')/label"/>

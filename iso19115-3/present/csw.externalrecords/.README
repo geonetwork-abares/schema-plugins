@@ -1,0 +1,3 @@
+This directory is for csw presentation xslts that will be executed if the virtual csw service called 
+csw.externalrecords is called. If the particular XSLT being sought eg. ogc-full.xsl is not present
+in this directory then the XSLT in the base csw directory will be used instead.

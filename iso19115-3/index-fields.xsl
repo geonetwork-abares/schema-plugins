@@ -206,7 +206,7 @@
 					<Field name="geoDescCode" string="{string(.)}" store="true" index="true"/>
 				</xsl:for-each>
 
-				<xsl:for-each select="mri:temporalElement/gex:EX_TemporalExtent/gex:extent">
+				<xsl:for-each select="gex:temporalElement/gex:EX_TemporalExtent/gex:extent">
 					<xsl:for-each select="gml:TimePeriod">
 						<xsl:variable name="times">
 							<xsl:call-template name="newGmlTime">
@@ -374,7 +374,7 @@
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<!--  Fields use to search on Service -->
 			
-			<xsl:for-each select="srv:serviceType/gco:LocalName">
+			<xsl:for-each select="srv:serviceType/gco:ScopedName">
 				<Field  name="serviceType" string="{string(.)}" store="true" index="true"/>
 			</xsl:for-each>
 			
@@ -628,6 +628,25 @@
 		</xsl:for-each>
 
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
+    <!-- eCat sequence identifier is saved if present into eCatId field within lucene -->
+		<xsl:for-each select="mdb:alternativeMetadataReference/cit:CI_Citation/cit:identifier/mcc:MD_Identifier[mcc:codeSpace/gco:CharacterString='http://www.ga.gov.au/eCatId']">
+			<Field name="eCatId" string="{string(mcc:code/gco:CharacterString)}" store="true" index="true"/>
+		</xsl:for-each>
+
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->		
+    <!-- author is saved if present into author field within lucene -->
+		<xsl:for-each select="mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility[cit:role/cit:CI_RoleCode[@codeListValue='author']]">		
+			<Field name="author" string="{string(cit:party/cit:CI_Individual/cit:name/gco:CharacterString)}" store="true" index="true"/>
+			<Field name="author" string="{substring-before(string(cit:party/cit:CI_Individual/cit:name/gco:CharacterString), ',')}" store="true" index="true"/>			
+		</xsl:for-each>
+
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- ga identifier -->
+		<xsl:for-each select="mdb:alternativeMetadataReference/cit:CI_Citation/cit:identifier/mcc:MD_Identifier[mcc:codeSpace/gco:CharacterString='http://www.ga.gov.au']">
+			<Field name="gaId" string="{string(mcc:code/gco:CharacterString)}" store="false" index="true"/>
+		</xsl:for-each>
+
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- parentIdentifier is deprecated in favour of parentMetadata -->
 	  <xsl:for-each select="
 	    mdb:parentMetadata/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gco:CharacterString|
@@ -638,7 +657,7 @@
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		
     <!-- mdb:dateInfo is change date -->
-		<xsl:for-each select="mdb:dateInfo/cit:date/cit:CI_Date[cit:dateType/cit:CI_DateTypeCode/@codeListValue='revision']/cit:date/*">
+		<xsl:for-each select="mdb:dateInfo/cit:CI_Date[cit:dateType/cit:CI_DateTypeCode/@codeListValue='revision']/cit:date/*">
 			<Field name="changeDate" string="{string(.)}" store="true" index="true"/>
 		</xsl:for-each>
 		

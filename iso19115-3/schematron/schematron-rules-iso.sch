@@ -170,7 +170,7 @@
     
 
 
-    <sch:rule context="//gex:EX_Extent">
+    <sch:rule context="//gex:EX_Extent[/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue=('dataset', '')]">
 
       <!-- Check that element exist and is not empty ones.
       TODO improve nonEmpty checks -->

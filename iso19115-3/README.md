@@ -1,6 +1,4 @@
-# ISO 19115-3 schema plugin
-
-This is the ISO19115-3 schema plugin for GeoNetwork 2.11.x or greater version.
+# ISO 19115-3 schema plugin for Geoscience Australia
 
 ## Warning:
 
@@ -24,8 +22,6 @@ This plugin supports:
 
 
 This plugin does not support:
-* editor associated resources
-* link to directory
 * ... still lots of features to be checked
 
 

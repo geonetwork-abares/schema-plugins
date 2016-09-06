@@ -37,12 +37,16 @@
       
       <xsl:call-template name="add-iso19115-3-namespaces"/>
       
-      <!-- Add metadataIdentifier if it doesn't exist -->
+      <!-- Add metadataIdentifier with uuid in geonetwork -->
       <mdb:metadataIdentifier>
         <mcc:MD_Identifier>
-          <!-- authority could be for this GeoNetwork node ?
-            <mcc:authority><cit:CI_Citation>etc</cit:CI_Citation></mcc:authority>
-          -->
+         	<mcc:authority>
+						<cit:CI_Citation>
+							<cit:title>
+           			<gco:CharacterString>GeoNetwork UUID</gco:CharacterString>
+							</cit:title>
+						</cit:CI_Citation>
+					</mcc:authority>
           <mcc:code>
             <gco:CharacterString><xsl:value-of select="/root/env/uuid"/></gco:CharacterString>
           </mcc:code>
@@ -51,6 +55,7 @@
           </mcc:codeSpace>
         </mcc:MD_Identifier>
       </mdb:metadataIdentifier>
+
       
       <xsl:apply-templates select="mdb:defaultLocale"/>
       <xsl:apply-templates select="mdb:parentMetadata"/>
@@ -103,25 +108,70 @@
         </xsl:otherwise>
       </xsl:choose>
       
-      <xsl:apply-templates select="mdb:metadataProfile"/>
-      <xsl:apply-templates select="mdb:alternativeMetadataReference"/>
+      <!-- Add metadataProfile if it doesn't exist -->
+      <xsl:choose>
+        <xsl:when test="not(mdb:metadataProfile)">
+          <mdb:metadataProfile>
+            <cit:CI_Citation>
+              <cit:title>
+                <gco:CharacterString>Geoscience Australia Community Metadata Profile of ISO 19115-1:2014</gco:CharacterString>
+              </cit:title>
+              <cit:edition>
+                <gco:CharacterString>Version 2.0, April 2015</gco:CharacterString>
+              </cit:edition>
+            </cit:CI_Citation>
+          </mdb:metadataProfile>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="mdb:metadataProfile"/>
+        </xsl:otherwise>
+      </xsl:choose>
+
+      <!-- Add gaid if specified as alternativeMetadataReference, otherwise copy existing reference to gaid 
+			     NOTE: If you change the codeSpace, you must also change it in index-fields.xsl, layout/layout-custom-fields.xsl, extract-ga-id.xsl
+					 and in the ISO19139-to-ISO19115-3 conversion script in web/src/main/webapp/xsl/conversion/import 
+					 This codeSpace value is the way in which the ga-id is recognized. -->
+			<xsl:choose>
+				<xsl:when test="/root/env/gaid">
+					<mdb:alternativeMetadataReference>
+						<cit:CI_Citation>
+							<cit:title>
+           			<gco:CharacterString>Geoscience Australia - short identifier for metadata record with uuid <xsl:value-of select="/root/env/uuid"/></gco:CharacterString>
+							</cit:title>
+      				<cit:identifier>
+       					<mcc:MD_Identifier>
+         					<mcc:code>
+           					<gco:CharacterString><xsl:value-of select="/root/env/gaid"/></gco:CharacterString>
+         					</mcc:code>
+         					<mcc:codeSpace>
+           					<gco:CharacterString>http://www.ga.gov.au/eCatId</gco:CharacterString>
+         					</mcc:codeSpace>
+       					</mcc:MD_Identifier>
+      				</cit:identifier>
+						</cit:CI_Citation>
+					</mdb:alternativeMetadataReference>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:copy-of select="mdb:alternativeMetadataReference[cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:codeSpace/gco:CharacterString='http://www.ga.gov.au/eCatId']"/>
+				</xsl:otherwise>
+			</xsl:choose>
+     
+		 	<!-- Now process all other alternativeMetadataReference elements -->
+      <xsl:apply-templates select="mdb:alternativeMetadataReference[cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:codeSpace/gco:CharacterString!='http://www.ga.gov.au/eCatId']"/>
       <xsl:apply-templates select="mdb:otherLocale"/>
-      <xsl:apply-templates select="mdb:metadataLinkage"/>
 
       <xsl:variable name="pointOfTruthUrl" select="concat($url, '/search?uuid=', $uuid)"/>
 
-      <xsl:if test="$createMetadataLinkage and count(mdb:metadataLinkage/cit:CI_OnlineResource/cit:linkage/*[. = $pointOfTruthUrl]) = 0">
+      <xsl:if test="$createMetadataLinkage">
         <!-- TODO: This should only be updated for not harvested records ? -->
         <mdb:metadataLinkage>
           <cit:CI_OnlineResource>
             <cit:linkage>
-              <!-- TODO: define a URL pattern and use it here -->
-              <!-- TODO: URL could be multilingual ? -->
               <gco:CharacterString><xsl:value-of select="$pointOfTruthUrl"/></gco:CharacterString>
             </cit:linkage>
-            <!-- TODO: Could be relevant to add description of the
-            point of truth for the metadata linkage but this
-            needs to be language dependant. -->
+						<cit:description>
+              <gco:CharacterString>Point-of-truth metadata URL</gco:CharacterString>
+						</cit:description>
             <cit:function>
               <cit:CI_OnLineFunctionCode codeList="{concat($codeListLocation,'#CI_OnLineFunctionCode')}"
                                          codeListValue="completeMetadata"/>
@@ -211,7 +261,21 @@
     </xsl:copy>
   </xsl:template>
   
-  
+  <!-- Fix funky and missing gco:Boolean values -->
+  <xsl:template match="gco:Boolean">
+		<xsl:choose>
+			<xsl:when test="string()=('true','false','1','0')">
+				<xsl:copy-of select="."/>
+			</xsl:when>
+			<xsl:when test="string()='optional'">
+				<gco:Boolean>true</gco:Boolean>
+			</xsl:when>
+			<xsl:otherwise>
+				<gco:Boolean>false</gco:Boolean>
+			</xsl:otherwise>
+		</xsl:choose>
+ 	</xsl:template>
+
   <xsl:template match="*[gco:CharacterString]">
     <xsl:copy>
       <xsl:apply-templates select="@*[not(name()='gco:nilReason')]"/>
