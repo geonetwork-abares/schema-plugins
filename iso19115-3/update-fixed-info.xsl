@@ -114,10 +114,10 @@
           <mdb:metadataProfile>
             <cit:CI_Citation>
               <cit:title>
-                <gco:CharacterString>Geoscience Australia Community Metadata Profile of ISO 19115-1:2014</gco:CharacterString>
+                <gco:CharacterString>ABARES Community Metadata Profile of ISO 19115-1:2014</gco:CharacterString>
               </cit:title>
               <cit:edition>
-                <gco:CharacterString>Version 2.0, April 2015</gco:CharacterString>
+                <gco:CharacterString>Version 1.0, September 2016</gco:CharacterString>
               </cit:edition>
             </cit:CI_Citation>
           </mdb:metadataProfile>
@@ -127,37 +127,6 @@
         </xsl:otherwise>
       </xsl:choose>
 
-      <!-- Add gaid if specified as alternativeMetadataReference, otherwise copy existing reference to gaid 
-			     NOTE: If you change the codeSpace, you must also change it in index-fields.xsl, layout/layout-custom-fields.xsl, extract-ga-id.xsl
-					 and in the ISO19139-to-ISO19115-3 conversion script in web/src/main/webapp/xsl/conversion/import 
-					 This codeSpace value is the way in which the ga-id is recognized. -->
-			<xsl:choose>
-				<xsl:when test="/root/env/gaid">
-					<mdb:alternativeMetadataReference>
-						<cit:CI_Citation>
-							<cit:title>
-           			<gco:CharacterString>Geoscience Australia - short identifier for metadata record with uuid <xsl:value-of select="/root/env/uuid"/></gco:CharacterString>
-							</cit:title>
-      				<cit:identifier>
-       					<mcc:MD_Identifier>
-         					<mcc:code>
-           					<gco:CharacterString><xsl:value-of select="/root/env/gaid"/></gco:CharacterString>
-         					</mcc:code>
-         					<mcc:codeSpace>
-           					<gco:CharacterString>http://www.ga.gov.au/eCatId</gco:CharacterString>
-         					</mcc:codeSpace>
-       					</mcc:MD_Identifier>
-      				</cit:identifier>
-						</cit:CI_Citation>
-					</mdb:alternativeMetadataReference>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:copy-of select="mdb:alternativeMetadataReference[cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:codeSpace/gco:CharacterString='http://www.ga.gov.au/eCatId']"/>
-				</xsl:otherwise>
-			</xsl:choose>
-     
-		 	<!-- Now process all other alternativeMetadataReference elements -->
-      <xsl:apply-templates select="mdb:alternativeMetadataReference[cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:codeSpace/gco:CharacterString!='http://www.ga.gov.au/eCatId']"/>
       <xsl:apply-templates select="mdb:otherLocale"/>
 
       <xsl:variable name="pointOfTruthUrl" select="concat($url, '/search?uuid=', $uuid)"/>
