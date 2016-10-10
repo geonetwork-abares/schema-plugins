@@ -36,7 +36,7 @@
       </mdb:name>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
-	<mdb:contact xlink:href="local://subtemplate?uuid=urn:ga-contacts:11&amp;process=cit:role/cit:CI_RoleCode/@codeListValue~author"/>
+	<mdb:contact/>
   <mdb:metadataStandard>
     <cit:CI_Citation>
       <cit:title>
@@ -66,7 +66,7 @@
       <mri:citation>
         <cit:CI_Citation>
           <cit:title>
-            <gco:CharacterString>GA Draft Template for datasets in 19115-1:2014 and 19115-3 </gco:CharacterString>
+            <gco:CharacterString>ABARES Draft Template for datasets in 19115-1:2014 and 19115-3 </gco:CharacterString>
           </cit:title>
           <cit:date>
             <cit:CI_Date>
@@ -78,16 +78,6 @@
               </cit:dateType>
             </cit:CI_Date>
           </cit:date>
-<!-- Martins changes start -->         
-          <cit:identifier>
-             <mcc:MD_Identifier>
-                <mcc:code>
-                   <gco:CharacterString>Link to be added by administrator</gco:CharacterString>
-                </mcc:code>
-                <mcc:codeSpace>
-                   <gco:CharacterString>ga-dataSetURI</gco:CharacterString>                                                                                                  </mcc:codeSpace>
-          </mcc:MD_Identifier>
-<!-- Martins Changes end -->                                                                                                                                          </cit:identifier>
 		<cit:series>
 			<cit:CI_Series>
         <!-- Remove name field until picklist can be applied with it 
@@ -110,7 +100,7 @@
       <mri:status>
         <mcc:MD_ProgressCode codeList="codeListLocation#MD_ProgressCode" codeListValue=""/>
       </mri:status>
-			<mri:pointOfContact xlink:href="local://subtemplate?uuid=urn:ga-contacts:11&amp;process=cit:role/cit:CI_RoleCode/@codeListValue~pointOfContact"/>
+			<mri:pointOfContact/>
       <mri:spatialRepresentationType>
         <mcc:MD_SpatialRepresentationTypeCode codeList="codeListLocation#MD_SpatialRepresentationTypeCode"
           codeListValue=""/>
