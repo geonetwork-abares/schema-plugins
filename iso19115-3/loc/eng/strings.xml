@@ -42,7 +42,7 @@
 	<contact>Metadata Contact</contact>
 
 	<source>Source</source>
-	<resourceIdentification>Resource Identification</resourceIdentification>
+	<resourceIdentification>Resource</resourceIdentification>
 
 	<metadataScope>Type of Resource</metadataScope>
 
@@ -75,30 +75,34 @@
   <enum3>List of values is :</enum3>
 
 	<!-- new tabs in default mode -->
-	<resourceCitation>Citation</resourceCitation>
+	<resourceIdentification>Identification</resourceIdentification>
 	<resourceDescription>Description</resourceDescription>
 	<resourceKeywords>Keywords</resourceKeywords>
 	<resourceMaintenance>Maintenance</resourceMaintenance>
 	<constraints>Constraints</constraints>
 	<resourceConstraints>Resource Constraints</resourceConstraints>
 	<metadataConstraints>Metadata Constraints</metadataConstraints>
-	<contacts>Contacts</contacts>
+	<responsibilities>Responsibilities</responsibilities>
 	<resourceContact>Resource Contacts</resourceContact>
 	<metadataContact>Metadata Contacts</metadataContact>
 	<resourceSpatial>Spatial</resourceSpatial>
 	<resourceExtents>Extents</resourceExtents>
-	<distribution_name>Name</distribution_name>
-	<distribution_version>Version</distribution_version>
 	<resourceType>Type</resourceType>
-        <resourceLineageTab>Lineage</resourceLineageTab>
-        <resourceFormat>Format (admin only)</resourceFormat>
-        <resourceFormatNoTitle></resourceFormatNoTitle>
-        <distribution>Distribution</distribution>
+  <provenance>Provenance</provenance>
 
+<!-- TAB 4 -->
+  <product>Product</product>
+  <productWithFormat>Product with Online Reference</productWithFormat>
+
+<!-- TAB 6 -->
+  <releasability>Releasability</releasability>
+  <legalConstraints>Legal Constraints</legalConstraints>
+  <securityConstraints>Security Constraints</securityConstraints>
+
+<!-- TAB 10 -->
+  <metadataInfo>Metadata Info</metadataInfo>
+ 
   <useAssociatedResources><span>Add an online resource for distribution using the "<i class="fa fa-link"></i><i class="icon-external-link"></i>Associated resources" panel at the right hand side of the form</span></useAssociatedResources>
-
-	<!-- gaDatasetURI -->
-	<gaDatasetURI>GA Dataset URI</gaDatasetURI>
 
 	<!-- Service stuff -->
 	<serviceDescription>Description</serviceDescription>

@@ -215,15 +215,15 @@
     <_condition>optional</_condition>
   </element>
   <element name="mdb:metadataScope" id="38.0">
-    <label>Type of resource</label>
+    <label>Product</label>
     <description iso="true">Type of resource for which metadata is provided</description>
   </element>
   <element name="mdb:resourceScope" id="38.1">
-    <label>Resource Scope Code</label>
+    <label>Type</label>
     <description iso="true">Information about the scope of the resource</description>
   </element>
   <element name="mdb:name" context="mdb:MD_MetadataScope" id="38.2">
-    <label>Scope Description</label>
+    <label>Description</label>
     <description iso="true">Description of the scope</description>
   </element>
   <element name="mdb:MD_MetadataScope" id="6.0">
@@ -1580,9 +1580,8 @@
             distributed</description>
 	</element>
 	<element name="mdb:distributionInfo" id="17.0">
-		<description>Provides information about the distributor of and options for obtaining the
-            resource(s)</description>
-		<label>Distribution Information</label>
+		<description>Provides information about the product including distributor, format and online reference</description>
+		<label>Product with Online Reference</label>
 	</element>
 	<element name="mri:distributionOrderProcess" id="281.0">
 		<label>Distribution / Order Process</label>
@@ -1593,7 +1592,7 @@
 		<label>Distributor</label>
 		<description>Provides information about the distributor</description>
 	</element>
-	<element name="mri:distributorContact" id="280.0">
+	<element name="mrd:distributorContact" id="280.0">
 		<label>Distributor contact</label>
 		<description>Party from whom the resource may be obtained. This list need not be
             exhaustive</description>
