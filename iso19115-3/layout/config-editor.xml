@@ -328,7 +328,7 @@
          <tab id="constraints" mode="flat">
              <section name="mco:releasability">
                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability"/>
-                    <action type="add" name="releasability" or="releasability"
+                    <action type="add" name="releasability" or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
                            <snippet>
@@ -353,7 +353,8 @@
              </section>
              <section name="mco:MD_LegalConstraints">
                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
-                    <action type="add" name="legalConstraints" if="count(/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints) > 0"
+                    <action type="add" name="legalConstraints"
+                            or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
                            <snippet>
@@ -371,7 +372,8 @@
              </section>
              <section name="mco:MD_SecurityConstraints">
                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints"/>
-                    <action type="add" name="securityConstraints" if="count(/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints) > 0"
+                    <action type="add" name="securityConstraints"
+                            or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
                            <snippet>
