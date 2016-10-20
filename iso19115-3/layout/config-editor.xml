@@ -16,6 +16,7 @@
         xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
         xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0"
         xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+        xmlns:gml="http://www.opengis.net/gml/3.2"
         xsi:noNamespaceSchemaLocation="../../config-editor.xsd">
 
   <!-- Form field type configuration. Default is text. -->
@@ -424,14 +425,15 @@
             <section name=" ">
                <!-- TODO: Need to use a thesaurus Selector that forces just one 
                           geographic thesaurus and returns a text value that can be  
-                          plugged into the geographicIdentifier  - TODO: use notEvaluated -->
+                          plugged into the geographicIdentifier  - TODO: use notEvaluated
+                          Check whether dear old choice does that in bbox -->
                <field name="geographicIdentifier" templateModeOnly="true"
                       xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicDescription/gex:geographicIdentifier"
                       del=".">
                    <template>
                        <values>
                            <key label="geographicIdentifier"
-                                xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicDescription/gex:geographicIdentifier/gco:CharacterString"
+                                xpath="mcc:MD_Identifier/mcc:code/gco:CharacterString"
                                 tooltip="geographicIdentifier">
                            </key>
                        </values>
@@ -449,12 +451,84 @@
                        </snippet>
                    </template>
                </field>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicBoundingBox"
-                      or="EX_GeographicBoundingBox"
-                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:temporalElement/gex:EX_TemporalExtent"
-                      or="EX_TemporalExtent"
-                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:temporalElement"/>
+                    <action type="add" name="geographicIdentifier" or="extent"
+                            in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
+                        <template>
+                            <snippet>
+                               <mri:extent>
+                                  <gex:EX_Extent>
+                                     <gex:geographicElement>
+                                        <gex:EX_GeographicDescription>
+                                           <gex:geographicIdentifier>
+                                              <mcc:MD_Identifier>
+                                                 <mcc:code>
+                                 		               <gco:CharacterString></gco:CharacterString>
+                              			             </mcc:code>
+                                                 <mcc:codeSpace>
+                                 		               <gco:CharacterString/>
+                                                 </mcc:codeSpace>
+                                              </mcc:MD_Identifier>
+                                           </gex:geographicIdentifier>
+                                        </gex:EX_GeographicDescription>
+                                     </gex:geographicElement>
+                                  </gex:EX_Extent>
+                               </mri:extent>
+                            </snippet>
+                        </template>
+                    </action>
+                     
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicBoundingBox"/>
+                    <action type="add" name="geographicBoundingBox" or="extent"
+                            in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
+                        <template>
+                            <snippet>
+                               <mri:extent>
+                                  <gex:EX_Extent>
+                                     <gex:geographicElement>
+                                        <gex:EX_GeographicBoundingBox>
+                                           <gex:westBoundLongitude>
+                                              <gco:Decimal>-180</gco:Decimal>
+                                           </gex:westBoundLongitude>
+                                           <gex:eastBoundLongitude>
+                                              <gco:Decimal>180</gco:Decimal>
+                                           </gex:eastBoundLongitude>
+                                           <gex:southBoundLatitude>
+                                              <gco:Decimal>-90</gco:Decimal>
+                                           </gex:southBoundLatitude>
+                                           <gex:northBoundLatitude>
+                                              <gco:Decimal>90</gco:Decimal>
+                                           </gex:northBoundLatitude>
+                                        </gex:EX_GeographicBoundingBox>
+                                     </gex:geographicElement>
+                                  </gex:EX_Extent>
+                               </mri:extent>
+                            </snippet>
+                        </template>
+                    </action>
+                  
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:temporalElement/gex:EX_TemporalExtent"/>
+                    <action type="add" name="geographicBoundingBox" or="extent"
+                            in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
+                        <template>
+                            <snippet>
+                               <mri:extent>
+                                  <gex:EX_Extent>
+                                     <gex:temporalElement>
+                                       <gex:EX_TemporalExtent>
+                                          <gex:extent>
+                                             <gml:TimePeriod gml:id="">
+                                                <gml:beginPosition/>
+                                                <gml:endPosition/>
+                                             </gml:TimePeriod>
+                                          </gex:extent>
+                                       </gex:EX_TemporalExtent>
+                                    </gex:temporalElement>
+                                  </gex:EX_Extent>
+                               </mri:extent>
+                            </snippet>
+                        </template>
+                    </action>
+
             </section>
          </tab>
 

@@ -99,6 +99,10 @@
   <legalConstraints>Legal Constraints</legalConstraints>
   <securityConstraints>Security Constraints</securityConstraints>
 
+<!-- TAB 8 -->
+  <geographicIdentifier>Geographic Identifier</geographicIdentifier>
+  <geographicBoundingBox>Geographic Bounding Box</geographicBoundingBox>
+ 
 <!-- TAB 10 -->
   <metadataInfo>Metadata Info</metadataInfo>
  
