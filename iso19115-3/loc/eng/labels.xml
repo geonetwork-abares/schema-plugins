@@ -1172,7 +1172,7 @@
 		<description>Citation data for the resource(s)</description>
 	</element>
 	<element name="cit:citedResponsibleParty" id="367.0">
-		<label>Cited responsible party</label>
+		<label>Responsibility</label>
 		<description>Name and position information for an individual or organization that is
             responsible for the resource</description>
 	</element>
@@ -1247,7 +1247,7 @@
 	</element>
 	<element name="mdb:contact" id="19.0">
 		<condition>mandatory</condition>
-		<label>Metadata Contact</label>
+		<label>Contact</label>
 		<description>Party responsible for the metadata information</description>
 	</element>
 	<element name="mmi:contact" id="148.1" context="mmi:MD_MaintenanceInformation">
@@ -2530,7 +2530,7 @@
 		<condition>mandatory</condition>
 	</element>
 	<element name="mri:pointOfContact" id="29.0">
-		<label>Resource Contact</label>
+		<label>Contact</label>
 		<description>Identification of, and means of communication with, person(s) and
         organizations(s) associated with the resource(s)</description>
 	</element>
@@ -2671,9 +2671,9 @@
             dataset</description>
 	</element>
 	<element name="mco:reference" id="102.0" >
-    	<label>Référence</label>
+    	<label>Reference</label>
     	<description iso="true">citation for the limitation or constraint EXAMPLE Copyright statement,licence agreement, etc.</description>
-    	<help></help>
+      <help>Bollocks</help>
     	<condition/>
   	</element>
   	<element name="mco:releasability" id="103.0" >
@@ -2707,7 +2707,19 @@
       <help></help>
       <condition/>
   	</element>
+  	<element name="mco:addressee" id="115.1">
+      <label>Addressee</label>
+      <description iso="true">party to which the release statement applies</description>
+      <help></help>
+      <condition/>
+  	</element>
   	<element name="mco:statement" id="116.0" context="mco:MD_Releasability">
+      <label>Statement</label>
+      <description iso="true">Release statement</description>
+      <help></help>
+      <condition/>
+    </element>
+  	<element name="mco:statement" id="116.1">
       <label>Statement</label>
       <description iso="true">Release statement</description>
       <help></help>
@@ -2715,6 +2727,12 @@
     </element>
     <element name="mco:disseminationConstraints" id="117.0" context="mco:MD_Releasability">
       <label>Constraints of dissemination </label>
+      <description iso="true">Component in determining releasability</description>
+      <help></help>
+      <condition/>
+    </element>
+    <element name="mco:disseminationConstraints" id="117.1">
+      <label>Constraints of dissemination</label>
       <description iso="true">Component in determining releasability</description>
       <help></help>
       <condition/>

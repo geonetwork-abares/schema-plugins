@@ -102,7 +102,7 @@
         </mri:MD_Resolution>
       </mri:spatialResolution>
       <mri:topicCategory>
-        <mri:MD_TopicCategoryCode></mri:MD_TopicCategoryCode>
+        <mri:MD_TopicCategoryCode>biota</mri:MD_TopicCategoryCode>
       </mri:topicCategory>
       <mri:extent>
         <gex:EX_Extent>

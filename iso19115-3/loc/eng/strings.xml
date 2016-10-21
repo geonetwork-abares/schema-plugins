@@ -106,8 +106,6 @@
 <!-- TAB 10 -->
   <metadataInfo>Metadata Info</metadataInfo>
  
-  <useAssociatedResources><span>Add an online resource for distribution using the "<i class="fa fa-link"></i><i class="icon-external-link"></i>Associated resources" panel at the right hand side of the form</span></useAssociatedResources>
-
 	<!-- Service stuff -->
 	<serviceDescription>Description</serviceDescription>
 	<serviceType>Service Type</serviceType>
@@ -121,5 +119,5 @@
 	<optionality>Optional?</optionality>
 	<repeatability>Repeatable?</repeatability>
 
-  <useAssociatedResourcesForOperatesOn><span>Select metadata records describing datasets that the service operates on using the "<i class="fa fa-link"></i><i class="icon-external-link"></i>Associated resources" panel at the right hand side of the form. Use the "<i class="fa fa-files-o"></i><i class="icon-external-link"></i>Link to a dataset" menu option.</span></useAssociatedResourcesForOperatesOn>
+  <useAssociatedResourcesForParentMetadata><span>If a parent metadata record is needed then select it using the "<i class="fa fa-link"></i><i class="icon-external-link"></i> Associated resources" panel at the right hand side of the form.</span></useAssociatedResourcesForParentMetadata>
 </strings>

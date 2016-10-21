@@ -88,25 +88,25 @@
       </for>
       <for name="mco:addressee" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
-                              data-template-type="contact"
+                              data-template-type="addressee"
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
                               data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
       </for>
-      <for name="mri:resourceConstraints" addDirective="data-gn-directory-entry-selector">
-         <directiveAttributes data-schema="iso19115-3" data-template-add-action="false"
-                              data-template-type="constraint"
-                              data-filter="{&#34;_root&#34;: &#34;mco:MD_LegalConstraints&#34;}"
+      <for name="mco:reference" addDirective="data-gn-directory-entry-selector">
+         <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
+                              data-template-type="license"
+                              data-filter="{&#34;_root&#34;: &#34;mco:CI_Citation&#34;}"
                               data-variables=""/>
       </for>
       <for name="mdb:metadataConstraints" addDirective="data-gn-directory-entry-selector">
-         <directiveAttributes data-schema="iso19115-3" data-template-add-action="false"
+         <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="constraint"
                               data-filter="{&#34;_root&#34;: &#34;mco:MD_LegalConstraints&#34;}"
                               data-variables=""/>
       </for>
       <for name="mrd:distributorContact" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
-                              data-template-type="contact"
+                              data-template-type="distributor"
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
                               data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
       </for>
@@ -119,7 +119,7 @@
       <for name="cit:citedResponsibleParty"
            addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
-                              data-template-type="author"
+                              data-template-type="responsibility"
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
                               data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
       </for>
@@ -166,6 +166,8 @@
       <name>mri:associatedResource</name>
       <name>mrl:source</name>
       <name>srv:parameter</name>
+      <name>mco:addressee</name>
+      <name>mco:reference</name>
   </fieldsWithFieldset>
 
   <multilingualFields>
@@ -318,7 +320,9 @@
 <!-- TAB 5 -->
          <tab id="resourceKeywords" mode="flat">
             <section name=" ">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:topicCategory"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:topicCategory"
+                      or="topicCategory"
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification"/>
                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:descriptiveKeywords"
                       or="descriptiveKeywords"
                       in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification"/>
@@ -327,17 +331,22 @@
 
 <!-- TAB 6 -->
          <tab id="constraints" mode="flat">
-             <section name="mco:releasability">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability"/>
+             <section name="mco:MD_Releasability">
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability/mco:addressee"
+                      or="addressee"
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability/mco:statement"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability/mco:disseminationConstraints"/>
                     <action type="add" name="releasability" or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
+                           <!-- exclude mco:addressee from snippet - so directive will be used to
+                                select addressee -->
                            <snippet>
                              <mri:resourceConstraints> 
                                <mco:MD_Constraints>
                                  <mco:releasability>
                                    <mco:MD_Releasability>
-                                     <mco:addressee/>
                                      <mco:statement>
                                        <gco:CharacterString/>
                                      </mco:statement>
@@ -353,18 +362,22 @@
                     </action>
              </section>
              <section name="mco:MD_LegalConstraints">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints/mco:useLimitation"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints/mco:reference"
+                      or="reference"
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
                     <action type="add" name="legalConstraints"
                             or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
+                           <!-- exclude mco:reference from snippet - so directive will be used to
+                                select license -->
                            <snippet>
 	                           <mri:resourceConstraints>
                                <mco:MD_LegalConstraints>
                                   <mco:useLimitation>
                                      <gco:CharacterString/>
                                   </mco:useLimitation>
-                                  <mco:reference/>
                                </mco:MD_LegalConstraints>
                              </mri:resourceConstraints>
                            </snippet>
@@ -372,7 +385,9 @@
                     </action>
              </section>
              <section name="mco:MD_SecurityConstraints">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints/mco:classification"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints/mco:userNote"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints/mco:handlingDescription"/>
                     <action type="add" name="securityConstraints"
                             or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
@@ -429,7 +444,10 @@
                           Check whether dear old choice does that in bbox -->
                <field name="geographicIdentifier" templateModeOnly="true"
                       xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicDescription/gex:geographicIdentifier"
-                      del=".">
+                      del="../../../..">
+                   <!-- because each geographicElement is in its own mri:extent, then we must
+                        delete the whole mri:extent if the geographicElement is deleted
+                        that why we have del="../../../.." above -->
                    <template>
                        <values>
                            <key label="geographicIdentifier"
@@ -546,8 +564,10 @@
 
 <!-- TAB 10 -->
          <tab id="metadataInfo" mode="flat">
-             <section name="metadataConstraints">
+             <section name=" ">
+                <text ref="useAssociatedResourcesForParentMetadata"/>
                 <field xpath="/mdb:MD_Metadata/mdb:metadataConstraints" or="metadataConstraints" in="/mdb:MD_Metadata"/>
+                <field xpath="/mdb:MD_Metadata/mdb:contact" or="contact" in="/mdb:MD_Metadata"/>
              </section>
          </tab>
 
@@ -559,6 +579,7 @@
             <for name="cit:CI_Individual"/>
             <for name="cit:CI_Organisation"/>
             <for name="mrl:LI_Lineage"/>
+            <for name="mco:MD_Releasability"/>
       </flatModeExceptions>
     </view>
 
