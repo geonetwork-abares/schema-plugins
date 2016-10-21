@@ -19,6 +19,8 @@
         xmlns:gml="http://www.opengis.net/gml/3.2"
         xsi:noNamespaceSchemaLocation="../../config-editor.xsd">
 
+  <!-- TODO: Fix tooltip= - should use the name of an element from the labels.xml file -->
+
   <!-- Form field type configuration. Default is text. -->
   <fields>
       <for name="mri:abstract" use="textarea"/>
@@ -37,6 +39,8 @@
       <for name="mri:specificUsage" use="textarea"/>
       <for name="mco:useLimitation" use="textarea"/>
       <for name="mri:levelOfDetail" use="textarea"/>
+      <for name="mco:statement" use="textarea"/>
+      <for name="mco:userNote" use="textarea"/>
 
 
       <for name="gco:Distance" use="number"/>
@@ -116,8 +120,7 @@
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
                               data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
       </for>
-      <for name="cit:citedResponsibleParty"
-           addDirective="data-gn-directory-entry-selector">
+      <for name="cit:citedResponsibleParty" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="responsibility"
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
@@ -126,6 +129,11 @@
 
       <for name="mri:descriptiveKeywords" addDirective="data-gn-thesaurus-selector">
          <directiveAttributes data-transformation="to-iso19115-3-keyword"/>
+      </for>
+
+      <for name="gex:geographicIdentifier" addDirective="data-gn-thesaurus-selector">
+         <directiveAttributes data-transformation="to-iso19115-3-identifier"
+                              data-thesaurus-type="geographic"/> 
       </for>
   </fields>
 
@@ -166,8 +174,8 @@
       <name>mri:associatedResource</name>
       <name>mrl:source</name>
       <name>srv:parameter</name>
-      <name>mco:addressee</name>
-      <name>mco:reference</name>
+      <name>mco:releasability</name>
+      <name>gex:geographicIdentifier</name>
   </fieldsWithFieldset>
 
   <multilingualFields>
@@ -285,7 +293,6 @@
                            </mrd:distributionFormat>
                            <mrd:distributor>
                               <mrd:MD_Distributor>
-                                   <mrd:distributorContact/>
                               </mrd:MD_Distributor>
                             </mrd:distributor>
                             <mrd:transferOptions>
@@ -331,17 +338,13 @@
 
 <!-- TAB 6 -->
          <tab id="constraints" mode="flat">
-             <section name="mco:MD_Releasability">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability/mco:addressee"
-                      or="addressee"
-                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability/mco:statement"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability/mco:MD_Releasability/mco:disseminationConstraints"/>
+             <section name=" ">
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_Constraints/mco:releasability" del="../.."/>
                     <action type="add" name="releasability" or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
-                           <!-- exclude mco:addressee from snippet - so directive will be used to
-                                select addressee -->
+                           <!-- exclude mco:addressee from snippet and add mco:addressee as a flat
+                                mode exception - directive will then be used to select addressee -->
                            <snippet>
                              <mri:resourceConstraints> 
                                <mco:MD_Constraints>
@@ -361,17 +364,14 @@
                         </template>
                     </action>
              </section>
-             <section name="mco:MD_LegalConstraints">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints/mco:useLimitation"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints/mco:reference"
-                      or="reference"
-                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
+             <section name=" ">
+               <field name="legalConstraints" xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints[mco:MD_LegalConstraints]"/>
                     <action type="add" name="legalConstraints"
                             or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
-                           <!-- exclude mco:reference from snippet - so directive will be used to
-                                select license -->
+                           <!-- exclude mco:reference from snippet and add mco:reference as a flat
+                                mode exception - directive will then be used to select reference -->
                            <snippet>
 	                           <mri:resourceConstraints>
                                <mco:MD_LegalConstraints>
@@ -384,10 +384,10 @@
                         </template>
                     </action>
              </section>
-             <section name="mco:MD_SecurityConstraints">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints/mco:classification"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints/mco:userNote"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_SecurityConstraints/mco:handlingDescription"/>
+             <!-- TODO: Cannot eliminate mco:reference from the following because it has been made a
+                        flatModeException -->
+             <section name=" ">
+               <field name="securityConstraints" xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints[mco:MD_SecurityConstraints]"/>
                     <action type="add" name="securityConstraints"
                             or="resourceConstraints"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
@@ -437,38 +437,11 @@
 <!-- TAB 8 -->
          <tab id="resourceExtents" mode="flat"
               displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[@codeListValue=('','dataset','series')]) &gt; 0">
-            <section name=" ">
-               <!-- TODO: Need to use a thesaurus Selector that forces just one 
-                          geographic thesaurus and returns a text value that can be  
-                          plugged into the geographicIdentifier  - TODO: use notEvaluated
-                          Check whether dear old choice does that in bbox -->
-               <field name="geographicIdentifier" templateModeOnly="true"
-                      xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicDescription/gex:geographicIdentifier"
-                      del="../../../..">
-                   <!-- because each geographicElement is in its own mri:extent, then we must
-                        delete the whole mri:extent if the geographicElement is deleted
-                        that why we have del="../../../.." above -->
-                   <template>
-                       <values>
-                           <key label="geographicIdentifier"
-                                xpath="mcc:MD_Identifier/mcc:code/gco:CharacterString"
-                                tooltip="geographicIdentifier">
-                           </key>
-                       </values>
-                       <snippet>
-                            <gex:geographicIdentifier>
-                                <mcc:MD_Identifier>
-                                   <mcc:code>
-                                 			<gco:CharacterString>{{geographicIdentifier}}</gco:CharacterString>
-                              			</mcc:code>
-                                    <mcc:codeSpace>
-                                 			<gco:CharacterString/>
-                                    </mcc:codeSpace>
-                                </mcc:MD_Identifier>
-                            </gex:geographicIdentifier>
-                       </snippet>
-                   </template>
-               </field>
+            <section name="gex:geographicIdentifier">
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicDescription/gex:geographicIdentifier"
+                      or="geographicIdentifier"
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicDescription"
+                      del="../../../.."/>
                     <action type="add" name="geographicIdentifier" or="extent"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
@@ -477,16 +450,6 @@
                                   <gex:EX_Extent>
                                      <gex:geographicElement>
                                         <gex:EX_GeographicDescription>
-                                           <gex:geographicIdentifier>
-                                              <mcc:MD_Identifier>
-                                                 <mcc:code>
-                                 		               <gco:CharacterString></gco:CharacterString>
-                              			             </mcc:code>
-                                                 <mcc:codeSpace>
-                                 		               <gco:CharacterString/>
-                                                 </mcc:codeSpace>
-                                              </mcc:MD_Identifier>
-                                           </gex:geographicIdentifier>
                                         </gex:EX_GeographicDescription>
                                      </gex:geographicElement>
                                   </gex:EX_Extent>
@@ -494,8 +457,11 @@
                             </snippet>
                         </template>
                     </action>
+            </section>
+
+            <section name=" ">
                      
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicBoundingBox"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicBoundingBox" del="../../.."/>
                     <action type="add" name="geographicBoundingBox" or="extent"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
@@ -524,7 +490,7 @@
                         </template>
                     </action>
                   
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:temporalElement/gex:EX_TemporalExtent"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:extent/gex:EX_Extent/gex:temporalElement/gex:EX_TemporalExtent" del="../../.."/>
                     <action type="add" name="geographicBoundingBox" or="extent"
                             in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
                         <template>
@@ -579,7 +545,10 @@
             <for name="cit:CI_Individual"/>
             <for name="cit:CI_Organisation"/>
             <for name="mrl:LI_Lineage"/>
-            <for name="mco:MD_Releasability"/>
+            <for name="mrd:distributorContact"/>
+            <for name="mco:addressee"/>
+            <for name="mco:reference"/>
+            <for name="gex:geographicIdentifier"/>
       </flatModeExceptions>
     </view>
 

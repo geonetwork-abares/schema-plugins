@@ -923,6 +923,11 @@
 		<description>Restrictions and legal prerequisites for accessing and using the resource or
             metadata</description>
 	</element>
+	<element name="mco:MD_LegalConstraints" context="mco:resourceConstraints" id="69.1">
+		<label>Legal constraints</label>
+		<description>Restrictions and legal prerequisites for accessing and using the resource or
+            metadata</description>
+	</element>
 	<element name="mmi:MD_MaintenanceInformation" id="142.0">
 		<label>Maintenance information</label>
 		<description>Information about the scope and frequency of updating</description>

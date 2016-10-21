@@ -188,7 +188,6 @@
             <mco:MD_Constraints>
                <mco:releasability>
                   <mco:MD_Releasability>
-                     <mco:addressee/>
                      <mco:statement>
                         <gco:CharacterString/>
                      </mco:statement>
@@ -204,7 +203,6 @@
                <mco:useLimitation>
                   <gco:CharacterString/>
                </mco:useLimitation>
-               <mco:reference/>
             </mco:MD_LegalConstraints>
          </mri:resourceConstraints>
          <mri:resourceConstraints>
@@ -248,8 +246,6 @@
                            </mrd:distributionFormat>
                            <mrd:distributor>
                               <mrd:MD_Distributor>
-                                   <mrd:distributorContact>
-                                    </mrd:distributorContact>
                               </mrd:MD_Distributor>
                             </mrd:distributor>
                             <mrd:transferOptions>

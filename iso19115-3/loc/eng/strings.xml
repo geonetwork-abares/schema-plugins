@@ -42,7 +42,8 @@
 	<contact>Metadata Contact</contact>
 
 	<source>Source</source>
-	<resourceIdentification>Resource</resourceIdentification>
+  <!-- Leave it blank - Identification is the name we want and it is tacked on automagically -->
+	<resourceIdentification></resourceIdentification>
 
 	<metadataScope>Type of Resource</metadataScope>
 
@@ -98,6 +99,9 @@
   <releasability>Releasability</releasability>
   <legalConstraints>Legal Constraints</legalConstraints>
   <securityConstraints>Security Constraints</securityConstraints>
+  <classification>Classification</classification>
+  <userNote>User Note</userNote>
+  <handlingDescription>Handling Description</handlingDescription>
 
 <!-- TAB 8 -->
   <geographicIdentifier>Geographic Identifier</geographicIdentifier>
