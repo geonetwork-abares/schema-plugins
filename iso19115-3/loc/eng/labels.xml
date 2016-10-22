@@ -902,7 +902,7 @@
             information supplied with the data but cannot be geolocated from the grid properties
             alone</description>
 	</element>
-	<element name="mri:MD_GridSpatialRepresentation" id="157.0">
+	<element name="msr:MD_GridSpatialRepresentation" id="157.0">
 		<label>Grid spatial representation</label>
 		<description>Information about grid spatial objects in the dataset</description>
 	</element>
@@ -1001,7 +1001,7 @@
 		<description>Brief description of ways in which the resource(s) is/are currently
             used</description>
 	</element>
-	<element name="mri:MD_VectorSpatialRepresentation" id="176.0">
+	<element name="msr:MD_VectorSpatialRepresentation" id="176.0">
 		<label>Vector spatial representation</label>
 		<description>Information about the vector spatial objects in the dataset</description>
 	</element>
@@ -1103,7 +1103,7 @@
 		<label>Authority</label>
 		<description>Person or party responsible for maintenance of the namespace</description>
 	</element>
-	<element name="mri:axisDimensionProperties" id="159.0">
+	<element name="msr:axisDimensionProperties" id="159.0">
 		<label>Axis Dimensions Properties</label>
 		<description>Information about spatial-temporal axis properties</description>
 		<_condition>M</_condition>
@@ -1555,12 +1555,12 @@
 		<label>Dimension</label>
 		<description>Information on the dimensions of the cell measurement value</description>
 	</element>
-	<element name="mri:dimensionName" id="180.0">
+	<element name="msr:dimensionName" id="180.0">
 		<label>Dimension name</label>
 		<description>Name of the axis</description>
 		<condition>mandatory</condition>
 	</element>
-	<element name="mri:dimensionSize" id="181.0">
+	<element name="msr:dimensionSize" id="181.0">
 		<label>Dimension size</label>
 		<description>Number of elements along the axis</description>
 		<condition>mandatory</condition>
@@ -1809,18 +1809,18 @@
 		<description>Identifier used to represent a geographic area</description>
 		<condition>mandatory</condition>
 	</element>
-	<element name="mri:geometricObjectCount" id="185.0">
+	<element name="msr:geometricObjectCount" id="185.0">
 		<label>Geometric object count</label>
 		<description>Total number of the point or vector object type occurring in the
             dataset</description>
 	</element>
-	<element name="mri:geometricObjectType" id="184.0">
+	<element name="msr:geometricObjectType" id="184.0">
 		<label>Geometric object type</label>
 		<description>Name of point and vector spatial objects used to locate zero-, one-, and
             two-dimensional spatial locations in the dataset</description>
 		<condition>mandatory</condition>
 	</element>
-	<element name="mri:geometricObjects" id="178.0">
+	<element name="msr:geometricObjects" id="178.0">
 		<label>Geometric objects</label>
 		<description>Information about the geometric objects used in the dataset</description>
 	</element>
@@ -2424,7 +2424,7 @@
             latitude in decimal degrees (positive north)</description>
 		<condition>mandatory</condition>
 	</element>
-	<element name="mri:numberOfDimensions" id="158.0">
+	<element name="msr:numberOfDimensions" id="158.0">
 		<label>Number of dimensions</label>
 		<description>Number of independent spatial-temporal axes</description>
 		<condition>mandatory</condition>
@@ -2749,7 +2749,7 @@
             scope</description>
 		<condition>conditional</condition>
 	</element>
-	<element name="mrl:resolution" id="182.0">
+	<element name="msr:resolution" id="182.0">
 		<label>Resolution</label>
 		<description>Degree of detail in the grid dataset</description>
 	</element>
@@ -2981,7 +2981,7 @@
             general categories and the user is encouraged to select the one most
             appropriate.</description>
 	</element>
-	<element name="mri:topologyLevel" id="177.0">
+	<element name="msr:topologyLevel" id="177.0">
 		<label>Topology level</label>
 		<description>Code which identifies the degree of complexity of the spatial
             relationships</description>

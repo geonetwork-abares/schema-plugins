@@ -176,6 +176,8 @@
       <name>srv:parameter</name>
       <name>mco:releasability</name>
       <name>gex:geographicIdentifier</name>
+      <name>msr:axisDimensionProperties</name>
+      <name>msr:geometricObjects</name>
   </fieldsWithFieldset>
 
   <multilingualFields>
@@ -520,10 +522,102 @@
          <tab id="resourceSpatial" mode="flat"
               displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[@codeListValue=('','dataset','series')]) &gt; 0">
             <section name=" ">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialResolution"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType"/>
-               <field xpath="/mdb:MD_Metadata/mdb:referenceSystemInfo" or="referenceSystemInfo"
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialResolution/mri:MD_Resolution/mri:distance"
+                      or="distance"
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialResolution/mri:MD_Resolution"/>
+               <field xpath="/mdb:MD_Metadata/mdb:referenceSystemInfo" 
+                      or="referenceSystemInfo" 
                       in="/mdb:MD_Metadata"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType"/>
+               <text ref="saveAndContinue" if="count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation) = 0 and count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation) = 0"/>
+            </section>
+            <section name="msr:MD_GridSpatialRepresentation" if="count(mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType/mcc:MD_SpatialRepresentationTypeCode[@codeListValue='grid']) > 0">
+                  <action type="add" name="addGridSpatialRepresentation"
+                          or="spatialRepresentationInfo"
+                          in="/mdb:MD_Metadata"
+                          if="count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation) = 0">
+                      <template>
+                         <snippet>
+                            <mdb:spatialRepresentationInfo>
+                               <msr:MD_GridSpatialRepresentation>
+                                 <msr:numberOfDimensions> 
+                                   <gco:Integer></gco:Integer>
+                                 </msr:numberOfDimensions> 
+                               </msr:MD_GridSpatialRepresentation>
+                            </mdb:spatialRepresentationInfo>
+                         </snippet>
+                      </template>
+                  </action>
+
+                  <field xpath="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation/msr:numberOfDimensions" 
+                         or="numberOfDimensions" 
+                         in="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation"/>
+                  <field xpath="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation/msr:axisDimensionProperties" 
+                         in="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation"/>
+                     <action type="add" name="axisDimensionProperties"
+                             or="axisDimensionProperties"
+                             in="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation">
+                        <template>
+                            <snippet>
+                               <msr:axisDimensionProperties>
+                                  <msr:MD_Dimension>
+                                     <msr:dimensionName>
+                                        <msr:MD_DimensionNameTypeCode codeList="codeListLocation#MD_DimensionNameTypeCode" codeListValue=""/>
+                                     </msr:dimensionName>
+                                     <msr:dimensionSize>
+                                        <gco:Integer></gco:Integer>
+                                     </msr:dimensionSize>
+                                     <msr:resolution>
+                                        <gco:Measure uom="degrees"></gco:Measure>
+                                     </msr:resolution>
+                                  </msr:MD_Dimension>
+                               </msr:axisDimensionProperties>
+                            </snippet>
+                        </template>
+
+                     </action>
+            </section>
+            <section name="msr:MD_VectorSpatialRepresentation" if="count(mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType/mcc:MD_SpatialRepresentationTypeCode[@codeListValue='vector']) > 0">
+                  <action type="add" name="addVectorSpatialRepresentation"
+                          or="spatialRepresentationInfo"
+                          in="/mdb:MD_Metadata"
+                          if="count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation) = 0">
+                      <template>
+                         <snippet>
+                            <mdb:spatialRepresentationInfo>
+                               <msr:MD_VectorSpatialRepresentation>
+                                 <msr:topologyLevel> 
+                                   <msr:MD_TopologyLevelCode codeList="codeListLocation#MD_TopologyLevelCode" codeListValue=""/>
+                                 </msr:topologyLevel> 
+                               </msr:MD_VectorSpatialRepresentation>
+                            </mdb:spatialRepresentationInfo>
+                         </snippet>
+                      </template>
+                  </action>
+
+                  <field xpath="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation/msr:topologyLevel" 
+                         or="topologyLevel" 
+                         in="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation"/>
+                  <field xpath="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation/msr:geometricObjects" 
+                         in="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation"/>
+                     <action type="add" name="geometricObjects"
+                             or="geometricObjects"
+                             in="/mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation">
+                        <template>
+                            <snippet>
+                               <msr:geometricObjects>
+                                  <msr:MD_GeometricObjects>
+                                     <msr:geometricObjectType>
+                                        <msr:MD_GeometricObjectTypeCode codeList="codeListLocation#MD_GeometricObjectTypeCode" codeListValue=""/>
+                                     </msr:geometricObjectType>
+                                     <msr:geometricObjectCount>
+                                        <gco:Integer></gco:Integer>
+                                     </msr:geometricObjectCount>
+                                  </msr:MD_GeometricObjects>
+                               </msr:geometricObjects>
+                            </snippet>
+                        </template>
+                     </action>
             </section>
          </tab>
 

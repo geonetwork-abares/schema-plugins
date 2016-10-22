@@ -124,4 +124,6 @@
 	<repeatability>Repeatable?</repeatability>
 
   <useAssociatedResourcesForParentMetadata><span>If a parent metadata record is needed then select it using the "<i class="fa fa-link"></i><i class="icon-external-link"></i> Associated resources" panel at the right hand side of the form.</span></useAssociatedResourcesForParentMetadata>
+
+  <saveAndContinue><span>After setting the "Spatial representation type", please <b>Save</b> the record and fill out the spatial representation information.</span></saveAndContinue>
 </strings>
