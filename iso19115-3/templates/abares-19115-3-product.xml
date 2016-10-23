@@ -66,7 +66,7 @@
       <mri:citation>
         <cit:CI_Citation>
           <cit:title>
-            <gco:CharacterString>ABARES Draft Template for datasets in 19115-1:2014 and 19115-3 </gco:CharacterString>
+            <gco:CharacterString>ABARES Draft Template for products in 19115-1:2014 and 19115-3</gco:CharacterString>
           </cit:title>
           <cit:date>
             <cit:CI_Date>
@@ -96,9 +96,9 @@
       </mri:spatialRepresentationType>
       <mri:spatialResolution>
         <mri:MD_Resolution>
-          <mri:levelOfDetail>
-        		<gco:CharacterString/>
-          </mri:levelOfDetail>
+          <mri:distance>
+        		<gco:Distance uom="metres"/>
+          </mri:distance>
         </mri:MD_Resolution>
       </mri:spatialResolution>
       <mri:topicCategory>
