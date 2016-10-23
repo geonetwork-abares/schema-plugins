@@ -29,7 +29,7 @@
       <for name="mdq:evaluationMethodDescription" use="textarea"/>
       <for name="mdq:explanation" use="textarea"/>
       <for name="mco:handlingDescription" use="textarea"/>
-        <for name="mmi:maintenanceNote" use="textarea"/>
+      <for name="mmi:maintenanceNote" use="textarea"/>
       <for name="mdq:measureDescription" use="textarea"/>
       <for name="mri:purpose" use="textarea"/>
       <for name="mrd:orderingInstructions" use="textarea"/>
@@ -49,92 +49,80 @@
       <for name="gco:Angle" use="number"/>
       <for name="gco:Boolean" use="checkbox"/>
 
-        <!-- NOTE: for directiveAttributes on gco:Date/gco:DateTime 
-                   refer to iso19115-3/layout/layout.xsl -->
+    <!-- NOTE: for directiveAttributes on gco:Date/gco:DateTime refer to iso19115-3/layout/layout.xsl -->
     <for name="gco:Date" use="data-gn-date-picker"/> 
-      <for name="gco:DateTime" use="data-gn-date-picker"/>
+    <for name="gco:DateTime" use="data-gn-date-picker"/>
 
 
 
       <!-- gmx:FileName/@src attribute -->
     <for name="src" use="data-gn-logo-selector"/>
 
-      <for name="cit:electronicMailAddress" use="email"/>
+    <for name="cit:electronicMailAddress" use="email"/>
 
-      <for name="lan:language" use="data-gn-language-picker"/>
-      <for name="lan:languageCode" use="data-gn-language-picker"/>
+    <for name="lan:language" use="data-gn-language-picker"/>
+    <for name="lan:languageCode" use="data-gn-language-picker"/>
 
-      <for name="lan:country" use="data-gn-country-picker"/>
-      <for name="cit:country" use="data-gn-country-picker"/>
+    <for name="lan:country" use="data-gn-country-picker"/>
+    <for name="cit:country" use="data-gn-country-picker"/>
 
-      <for name="mdb:referenceSystemInfo" addDirective="data-gn-crs-selector">
+    <for name="mdb:referenceSystemInfo" addDirective="data-gn-crs-selector">
          <directiveAttributes data-schema="iso19115-3"/>
-        </for>
+    </for>
 
-        <!--
+    <!-- Probably don't need to use the organisation-entry-selector - instead use the directory-entry-selector
+         without a data-variables attribute and filter on both cit:CI_Organisation and cit:CI_Individual -->
         <for name="cit:party" addDirective="data-gn-organisation-entry-selector">
               <directiveAttributes data-schema="iso19115-3"
                                    data-root="cit:CI_Individual or cit:CI_Organisation"/>
-    </for>
-        -->
+        </for>
+    -->
         
     <for name="mdb:contact" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="false"
                               data-template-type="contact"
-                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
-                              data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
-      </for>
-      <for name="mri:pointOfContact" addDirective="data-gn-directory-entry-selector">
+                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Organisation or cit:CI_Individual&#34;}"
+                              data-variables=""/>
+    </for>
+    <for name="mri:pointOfContact" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="contact"
-                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
-                              data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
-      </for>
-      <for name="mco:addressee" addDirective="data-gn-directory-entry-selector">
+                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Organisation or cit:CI_Individual&#34;}"
+                              data-variables=""/>
+    </for>
+    <for name="mco:addressee" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="addressee"
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
                               data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
-      </for>
-      <for name="mco:reference" addDirective="data-gn-directory-entry-selector">
+    </for>
+    <for name="mco:reference" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="license"
                               data-filter="{&#34;_root&#34;: &#34;mco:CI_Citation&#34;}"
                               data-variables=""/>
-      </for>
-      <for name="mdb:metadataConstraints" addDirective="data-gn-directory-entry-selector">
-         <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
-                              data-template-type="constraint"
-                              data-filter="{&#34;_root&#34;: &#34;mco:MD_LegalConstraints&#34;}"
-                              data-variables=""/>
-      </for>
-      <for name="mrd:distributorContact" addDirective="data-gn-directory-entry-selector">
-         <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
-                              data-template-type="distributor"
-                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
-                              data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
-      </for>
-      <for name="mrl:processor" addDirective="data-gn-directory-entry-selector">
+    </for>
+    <for name="mrd:distributorContact" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="contact"
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
-                              data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
-      </for>
-      <for name="cit:citedResponsibleParty" addDirective="data-gn-directory-entry-selector">
+                              data-variables=""/>
+    </for>
+    <for name="cit:citedResponsibleParty" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
-                              data-template-type="responsibility"
-                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
-                              data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
-      </for>
+                              data-template-type="contact"
+                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Organisation or cit:CI_Individual&#34;}"
+                              data-variables=""/>
+    </for>
 
-      <for name="mri:descriptiveKeywords" addDirective="data-gn-thesaurus-selector">
+    <for name="mri:descriptiveKeywords" addDirective="data-gn-thesaurus-selector">
          <directiveAttributes data-transformation="to-iso19115-3-keyword"/>
-      </for>
+    </for>
 
-      <for name="gex:geographicIdentifier" addDirective="data-gn-thesaurus-selector">
+    <for name="gex:geographicIdentifier" addDirective="data-gn-thesaurus-selector">
          <directiveAttributes data-transformation="to-iso19115-3-identifier"
                               data-thesaurus-type="geographic"/> 
-      </for>
+    </for>
   </fields>
 
 
