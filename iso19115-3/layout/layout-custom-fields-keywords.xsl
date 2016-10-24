@@ -15,23 +15,22 @@
                 exclude-result-prefixes="#all">
 
   <!-- Custom rendering of keyword section 
-    * mri:descriptiveKeywords is boxed element and the title
+    * mri:descriptiveKeywords and gex:geographicIdentifier is boxed element and the title
     of the fieldset is the thesaurus title
     * if the thesaurus is available in the catalog, display
     the advanced editor which provides easy selection of 
     keywords.
   -->
   <xsl:template mode="mode-iso19115-3" priority="2000" match="
-    mri:descriptiveKeywords">
+    mri:descriptiveKeywords|gex:geographicIdentifier">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="thesaurusTitle"
-      select="mri:MD_Keywords/mri:thesaurusName/cit:CI_Citation/cit:title/gco:CharacterString"/>
-
-
+      select="mri:MD_Keywords/mri:thesaurusName/cit:CI_Citation/cit:title/gco:CharacterString|mcc:MD_Identifier/mcc:authority/cit:CI_Citation/cit:title/gco:CharacterString"/>
+       
     <xsl:variable name="attributes">
       <xsl:if test="$isEditing">
         <!-- Create form for all existing attribute (not in gn namespace)
@@ -70,7 +69,84 @@
 
 
 
+  <xsl:template mode="mode-iso19115-3" match="mcc:MD_Identifier[name(..)='gex:geographicIdentifier']" priority="2000">
+    <xsl:variable name="thesaurusTitle"
+      select="mcc:authority/cit:CI_Citation/cit:title/gco:CharacterString"/>
 
+    <xsl:variable name="isTheaurusAvailable"
+      select="count($listOfThesaurus/thesaurus[title=$thesaurusTitle]) > 0"/>
+
+    <xsl:choose>
+      <xsl:when test="$isTheaurusAvailable">
+
+        <!-- The thesaurus key may be contained in the MD_Identifier field or 
+          get it from the list of thesaurus based on its title.
+          -->
+        <xsl:variable name="thesaurusInternalKey"
+          select="if (mcc:authority/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code)
+          then mcc:authority/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code
+          else $listOfThesaurus/thesaurus[title=$thesaurusTitle]/key"/>
+        <xsl:variable name="thesaurusKey"
+                      select="if (starts-with($thesaurusInternalKey, 'geonetwork.thesaurus.'))
+                      then substring-after($thesaurusInternalKey, 'geonetwork.thesaurus.')
+                      else $thesaurusInternalKey"/>
+
+        <!-- Single quote are escaped inside keyword. 
+          TODO: support multilingual editing of keywords
+          -->
+        <xsl:variable name="keywords" select="string-join(mcc:code/*[1], '`')"/>
+
+        <!-- Define the list of transformation mode available. -->
+        <xsl:variable name="transformations">to-iso19115-3-identifier,to-iso19115-3-identifier-with-anchor</xsl:variable>
+
+        <!-- Get current transformation mode based on XML fragement analysis -->
+        <xsl:variable name="transformation"
+          select="if (count(mcc:code/gmx:Anchor) > 0)
+          then 'to-iso19115-3-identifier-with-anchor'
+          else 'to-iso19115-3-identifier'"/>
+
+        <xsl:variable name="parentName" select="name(..)"/>
+
+        <!-- Create custom widget: 
+              * '' for item selector, 
+              * 'tagsinput' for tags
+              * 'tagsinput' and maxTags = 1 for only one tag
+              * 'multiplelist' for multiple selection list
+        -->
+        <xsl:variable name="widgetMode" select="'tagsinput'"/>
+        <xsl:variable name="maxTags" select="''"/>
+        <!--
+          Example: to restrict number of keyword to 1 for INSPIRE
+          <xsl:variable name="maxTags" 
+          select="if ($thesaurusKey = 'external.theme.inspire-theme') then '1' else ''"/>
+        -->
+        <!-- Create a div with the directive configuration
+            * widgetMod: the layout to use
+            * elementRef: the element ref to edit
+            * elementName: the element name
+            * thesaurusName: the thesaurus title to use
+            * thesaurusKey: the thesaurus identifier
+            * keywords: list of keywords in the element
+            * transformations: list of transformations
+            * transformation: current transformation
+          -->
+        <div data-gn-keyword-selector="{$widgetMode}"
+          data-metadata-id="{$metadataId}"
+          data-element-ref="{concat('_X', ../gn:element/@ref)}"
+          data-thesaurus-title="{$thesaurusTitle}"
+          data-thesaurus-key="{$thesaurusKey}"
+          data-keywords="{$keywords}" data-transformations="{$transformations}"
+          data-current-transformation="{$transformation}"
+          data-max-tags="{$maxTags}">
+        </div>
+
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates mode="mode-iso19115-3" select="*"/>
+      </xsl:otherwise>
+    </xsl:choose>
+
+  </xsl:template>
 
 
   <xsl:template mode="mode-iso19115-3" match="mri:MD_Keywords" priority="2000">

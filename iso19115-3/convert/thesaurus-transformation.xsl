@@ -37,6 +37,87 @@
 	</xsl:template>
 	
 	
+	<!-- Convert a concept to an iso19115-3 MD_Identifier for use in elements like gex:geographicIdentifier.
+    -->
+	<xsl:template name="to-iso19115-3-identifier">
+		<xsl:param name="withAnchor" select="false()"/>
+		<!-- Add thesaurus identifier using an Anchor which points to the download link. 
+        It's recommended to use it in order to have the thesaurus widget inline editor
+        which use the thesaurus identifier for initialization. -->
+		<xsl:param name="withThesaurusAnchor" select="true()"/>
+
+    <mcc:MD_Identifier>
+       <!-- Loop on all keyword from the same thesaurus TODO: Can only select one! How to force? -->
+       <xsl:variable name="currentThesaurus" select="if (thesaurus/key) then thesaurus/key else /root/request/thesaurus"/>
+       <xsl:variable name="keyword" select="//keyword[thesaurus/key = $currentThesaurus][1]/value"/>
+              <mcc:authority>
+                <cit:CI_Citation>
+                  <cit:title>
+                    <gco:CharacterString>
+                      <xsl:value-of select="/root/gui/thesaurus/thesauri/thesaurus[key = $currentThesaurus]/title"/>
+                    </gco:CharacterString>
+                  </cit:title>
+
+                  <xsl:variable name="thesaurusDate" select="normalize-space(/root/gui/thesaurus/thesauri/thesaurus[key = $currentThesaurus]/date)"/>
+
+                  <xsl:if test="$thesaurusDate != ''">
+                    <cit:date>
+                      <cit:CI_Date>
+                        <cit:date>
+                          <xsl:choose>
+                            <xsl:when test="contains($thesaurusDate, 'T')">
+                              <gco:DateTime>
+                                <xsl:value-of select="$thesaurusDate"/>
+                              </gco:DateTime>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <gco:DateTime>
+                                <xsl:value-of select="concat($thesaurusDate,'T00:00:00')"/>
+                              </gco:DateTime>
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </cit:date>
+                        <cit:dateType>
+                          <cit:CI_DateTypeCode
+                            codeList="{concat($codeListLocation,'#CI_DateTypeCode')}"
+                            codeListValue="publication"/>
+                        </cit:dateType>
+                      </cit:CI_Date>
+                    </cit:date>
+                  </xsl:if>
+
+                  <xsl:if test="$withThesaurusAnchor">
+                    <cit:identifier>
+                      <mcc:MD_Identifier>
+                        <mcc:code>
+                          <gcx:Anchor xlink:href="{/root/gui/thesaurus/thesauri/thesaurus[key = $currentThesaurus]/url}"
+                            >geonetwork.thesaurus.<xsl:value-of
+                              select="$currentThesaurus"/></gcx:Anchor>
+                        </mcc:code>
+                      </mcc:MD_Identifier>
+                    </cit:identifier>
+                  </xsl:if>
+                </cit:CI_Citation>
+              </mcc:authority>
+
+              <mcc:code>
+                <xsl:choose>
+                  <xsl:when test="$withAnchor">
+                    <gcx:Anchor
+                      xlink:href="{$serviceUrl}/xml.keyword.get?thesaurus={thesaurus/key}&amp;id={uri}">
+                      <xsl:value-of select="$keyword"/>
+                    </gcx:Anchor>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <gco:CharacterString>
+                      <xsl:value-of select="$keyword"/>
+                    </gco:CharacterString>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </mcc:code>
+    </mcc:MD_Identifier>
+  </xsl:template>
+
 	<!-- Convert a concept to an iso19115-3 keywords.
     If no keyword is provided, only thesaurus section is adaded.
     -->

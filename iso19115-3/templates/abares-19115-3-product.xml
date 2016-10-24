@@ -143,7 +143,41 @@
       <mri:descriptiveKeywords>
             <mri:MD_Keywords>
                <mri:keyword>
-                  <gco:CharacterString>AGRICULTURE non-specific</gco:CharacterString>
+                  <gco:CharacterString></gco:CharacterString>
+               </mri:keyword>
+               <mri:type>
+                  <mri:MD_KeywordTypeCode codeList="codeListLocation#MD_KeywordTypeCode" codeListValue="theme"/>
+               </mri:type>
+               <mri:thesaurusName>
+                  <cit:CI_Citation>
+                     <cit:title>
+                        <gco:CharacterString>ABARES Topic Categories Register</gco:CharacterString>
+                     </cit:title>
+                     <cit:date>
+                        <cit:CI_Date>
+                           <cit:date>
+                              <gco:DateTime>2016-10-25T00:00:00</gco:DateTime>
+                           </cit:date>
+                           <cit:dateType>
+                              <cit:CI_DateTypeCode codeList="codeListLocation#CI_DateTypeCode" codeListValue="publication"/>
+                           </cit:dateType>
+                        </cit:CI_Date>
+                     </cit:date>
+                     <cit:identifier>
+                        <mcc:MD_Identifier>
+                           <mcc:code>
+                              <gcx:Anchor xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.abares_topic_categories">geonetwork.thesaurus.external.theme.abares_topic_categories</gcx:Anchor>
+                           </mcc:code>
+                        </mcc:MD_Identifier>
+                     </cit:identifier>
+                  </cit:CI_Citation>
+               </mri:thesaurusName>
+            </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+      <mri:descriptiveKeywords>
+            <mri:MD_Keywords>
+               <mri:keyword>
+                  <gco:CharacterString></gco:CharacterString>
                </mri:keyword>
                <mri:type>
                   <mri:MD_KeywordTypeCode codeList="codeListLocation#MD_KeywordTypeCode" codeListValue="theme"/>
