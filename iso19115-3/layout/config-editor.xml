@@ -121,7 +121,7 @@
 
     <for name="gex:geographicIdentifier" addDirective="data-gn-thesaurus-selector">
          <directiveAttributes data-transformation="to-iso19115-3-identifier"
-                              data-thesaurus-type="geographic"/> 
+                              data-thesaurus-type="place"/> 
     </for>
   </fields>
 
