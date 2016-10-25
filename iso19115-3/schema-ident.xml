@@ -11,13 +11,19 @@
               xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0"
               xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
               xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
-              xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0">
+              xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
+              xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0">
     <elements type="root">
       <mdb:MD_Metadata/>
       <cit:CI_Responsibility/>
+      <cit:CI_Organisation/>
+      <cit:CI_Individual/>
+      <cit:CI_Citation/>
+      <cit:CI_Contact/>
       <mcc:MD_BrowseGraphic/>
       <mrd:MD_Format/>
       <mco:MD_LegalConstraints/>
+      <gco:CharacterString/>
       <!-- NOTE: Add subtemplate roots here so that they are recognized as belonging to this schema -->
     </elements>
   </autodetect>
