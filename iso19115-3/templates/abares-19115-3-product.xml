@@ -36,7 +36,6 @@
       </mdb:name>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
-	<mdb:contact/>
   <mdb:metadataStandard>
     <cit:CI_Citation>
       <cit:title>
@@ -89,7 +88,6 @@
       <mri:status>
         <mcc:MD_ProgressCode codeList="codeListLocation#MD_ProgressCode" codeListValue=""/>
       </mri:status>
-			<mri:pointOfContact/>
       <mri:spatialRepresentationType>
         <mcc:MD_SpatialRepresentationTypeCode codeList="codeListLocation#MD_SpatialRepresentationTypeCode"
           codeListValue=""/>
