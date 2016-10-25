@@ -541,7 +541,7 @@
               <cit:party>
                 <cit:CI_Organisation>
                   <cit:name xlink:href="local://xml.metadata.get?uuid=urn:abares:organisationname:1"/>
-                  <!-- <cit:contactInfo xlink:href="local://xml.metadata.get?uuid=urn:abares:contact:1"/> -->
+                  <cit:contactInfo xlink:href="local://xml.metadata.get?uuid=urn:abares:contact:1"/>
                   <cit:individual>
                     <cit:CI_Individual>
                       <cit:name>
