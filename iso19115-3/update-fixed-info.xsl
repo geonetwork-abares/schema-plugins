@@ -21,7 +21,7 @@
   <xsl:include href="convert/functions.xsl"/>
 
 	<!-- The correct codeList Location goes here -->
-	<xsl:variable name="codeListLocation" select="'codeListLocation'"/>
+	<xsl:variable name="codeListLocation" select="'http://data.agriculture.gov.au/anrdl/resources/codeList/codeList20161101.xml'"/>
 
   <!-- If no metadata linkage exist, build one based on
   the metadata UUID. -->
@@ -73,7 +73,7 @@
           <mdb:contact>
             <cit:CI_Responsibility>
               <cit:role>
-                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="author">author</cit:CI_RoleCode>
+                <cit:CI_RoleCode codeList="{concat($codeListLocation,'#CI_RoleCode')}" codeListValue="author">author</cit:CI_RoleCode>
               </cit:role>
               <xsl:call-template name="addCurrentUserAsParty"/>
             </cit:CI_Responsibility>
@@ -81,7 +81,7 @@
           <mdb:contact>
             <cit:CI_Responsibility>
               <cit:role>
-                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
+                <cit:CI_RoleCode codeList="{concat($codeListLocation,'#CI_RoleCode')}" codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
               </cit:role>
               <cit:party xlink:href="local://xml.metadata.get?uuid=urn:abares:individual:1"/>
             </cit:CI_Responsibility>
@@ -97,7 +97,7 @@
               <mdb:contact>
                 <cit:CI_Responsibility>
                   <cit:role>
-                    <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="author">author</cit:CI_RoleCode>
+                    <cit:CI_RoleCode codeList="{concat($codeListLocation,'#CI_RoleCode')}" codeListValue="author">author</cit:CI_RoleCode>
                   </cit:role>
                   <xsl:call-template name="addCurrentUserAsParty"/>
                 </cit:CI_Responsibility>

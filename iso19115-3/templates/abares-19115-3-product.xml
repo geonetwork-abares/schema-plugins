@@ -255,41 +255,51 @@
   </mdb:identificationInfo>
   <mdb:distributionInfo>
     <mrd:MD_Distribution>
-                           <mrd:distributionFormat>
+      <mrd:distributionFormat>
                                <mrd:MD_Format>
-                                   <mrd:formatSpecificationCitation>
+                                  <mrd:formatSpecificationCitation>
                                        <cit:CI_Citation>
                                            <cit:title>
                                                <gco:CharacterString></gco:CharacterString>
                                            </cit:title>
+                                           <cit:edition>
+                                               <gco:CharacterString></gco:CharacterString>
+                                           </cit:edition>
                                        </cit:CI_Citation>
-                                   </mrd:formatSpecificationCitation>
+                                  </mrd:formatSpecificationCitation>
+                                  <mrd:formatDistributor>
+                                     <mrd:MD_Distributor>
+                                       <mrd:distributorContact>
+                                         <cit:CI_Responsibility>
+                                           <cit:role>
+                                             <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="distributor">distributor</cit:CI_RoleCode>
+                                           </cit:role>
+                                         </cit:CI_Responsibility>
+                                       </mrd:distributorContact>
+                                       <mrd:distributorTransferOptions>
+                                         <mrd:MD_DigitalTransferOptions>
+                                           <mrd:onLine>
+                                             <cit:CI_OnlineResource>
+                                               <cit:linkage>
+                                                 <gco:CharacterString></gco:CharacterString>
+                                               </cit:linkage>
+                                               <cit:protocol>
+                                                 <gco:CharacterString></gco:CharacterString>
+                                               </cit:protocol>
+                                               <cit:function>
+                                                 <cit:CI_OnLineFunctionCode codeList="codeListLocation#cit:CI_OnLineFunctionCode" codeListValue=""/>
+                                               </cit:function>
+                                               <cit:description>
+                                                 <gco:CharacterString></gco:CharacterString>
+                                               </cit:description>
+                                             </cit:CI_OnlineResource>
+                                           </mrd:onLine>
+                                         </mrd:MD_DigitalTransferOptions>
+                                       </mrd:distributorTransferOptions>
+                                     </mrd:MD_Distributor>
+                                  </mrd:formatDistributor>
                                </mrd:MD_Format>
                            </mrd:distributionFormat>
-                           <mrd:distributor>
-                              <mrd:MD_Distributor>
-                              </mrd:MD_Distributor>
-                            </mrd:distributor>
-                            <mrd:transferOptions>
-                              <mrd:MD_DigitalTransferOptions>
-                                <mrd:onLine>
-                                  <cit:CI_OnlineResource>
-                                    <cit:linkage>
-                                      <gco:CharacterString></gco:CharacterString>
-                                    </cit:linkage>
-                                    <cit:protocol>
-                                      <gco:CharacterString></gco:CharacterString>
-                                    </cit:protocol>
-                                    <cit:function>
-                                      <cit:CI_OnLineFunctionCode codelist="codeListLocation#cit:CI_OnLineFunctionCode" codeListValue=""/>
-                                    </cit:function>
-                                    <cit:description>
-                                      <gco:CharacterString></gco:CharacterString>
-                                    </cit:description>
-                                  </cit:CI_OnlineResource>
-                                </mrd:onLine>
-                              </mrd:MD_DigitalTransferOptions>
-                            </mrd:transferOptions>
      </mrd:MD_Distribution>
   </mdb:distributionInfo>
   <mdb:resourceLineage>

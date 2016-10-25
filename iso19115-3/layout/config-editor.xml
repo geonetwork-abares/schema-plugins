@@ -362,7 +362,7 @@
                                                  <gco:CharacterString></gco:CharacterString>
                                                </cit:protocol>
                                                <cit:function>
-                                                 <cit:CI_OnLineFunctionCode codelist="codeListLocation#cit:CI_OnLineFunctionCode" codeListValue=""/>
+                                                 <cit:CI_OnLineFunctionCode codeList="codeListLocation#cit:CI_OnLineFunctionCode" codeListValue=""/>
                                                </cit:function>
                                                <cit:description>
                                                  <gco:CharacterString></gco:CharacterString>
