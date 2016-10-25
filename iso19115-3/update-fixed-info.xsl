@@ -10,6 +10,8 @@
   xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
   xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0"
   xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
+  xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
+  xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
   xmlns:xlink="http://www.w3.org/1999/xlink" 
   xmlns:gn="http://www.fao.org/geonetwork"
   exclude-result-prefixes="#all">
@@ -60,7 +62,54 @@
       <xsl:apply-templates select="mdb:defaultLocale"/>
       <xsl:apply-templates select="mdb:parentMetadata"/>
       <xsl:apply-templates select="mdb:metadataScope"/>
+      <!--
       <xsl:apply-templates select="mdb:contact"/>
+      -->
+
+      <xsl:choose>
+        <!-- If new record then add current user as author, ABARES as 
+             pointOfContact and remove all processors and originators -->
+        <xsl:when test="/root/env/created">
+          <mdb:contact>
+            <cit:CI_Responsibility>
+              <cit:role>
+                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="author">author</cit:CI_RoleCode>
+              </cit:role>
+              <xsl:call-template name="addCurrentUserAsParty"/>
+            </cit:CI_Responsibility>
+          </mdb:contact>
+          <mdb:contact>
+            <cit:CI_Responsibility>
+              <cit:role>
+                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
+              </cit:role>
+              <cit:party xlink:href="local://xml.metadata.get?uuid=urn:abares:individual:1"/>
+            </cit:CI_Responsibility>
+          </mdb:contact>
+          <xsl:apply-templates select="mdb:contact[cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='author' and cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='pointOfContact']"/>
+        </xsl:when>
+        <!-- Add current user as author and TODO: not already present -->
+        <xsl:otherwise>
+          <xsl:variable name="currentUser" select="concat(/root/env/user/details/record/surname,', ',/root/env/user/details/record/name)"/>
+          <xsl:choose>
+            <xsl:when test="/root/env/user/details/record/username!='admin'">
+              <!-- admin is not an author, so add it unless username!='admin' or unless already present -->
+              <mdb:contact>
+                <cit:CI_Responsibility>
+                  <cit:role>
+                    <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="author">author</cit:CI_RoleCode>
+                  </cit:role>
+                  <xsl:call-template name="addCurrentUserAsParty"/>
+                </cit:CI_Responsibility>
+              </mdb:contact>
+            </xsl:when>
+            <xsl:otherwise>
+              <!-- admin is not an author, so grab all mdb:contact -->
+              <xsl:apply-templates select="mdb:contact"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:otherwise>
+      </xsl:choose>
       
       <!-- Add dateInfo creation and revision if they don't exist -->
       <xsl:if test="not(mdb:dateInfo/cit:CI_Date[cit:dateType/cit:CI_DateTypeCode/@codeListValue='creation']) and /root/env/changeDate">
@@ -163,7 +212,11 @@
       <xsl:apply-templates select="mdb:metadataMaintenance"/>
     </xsl:copy>
   </xsl:template>
-  
+ 
+  <!-- Remove any empty gex:EX_GeographicDescription elements - see config-editor.xml -->
+<!--
+  <xsl:template match="mri:extent[gex:EX_Extent/gex:geographicElement/gex:EX_GeographicDescription[count(*)=0]]"/> 
+-->
   
   <!-- Update revision date -->
   <xsl:template match="mdb:dateInfo[cit:CI_Date/cit:dateType/cit:CI_DateTypeCode/@codeListValue='revision']">
@@ -481,6 +534,26 @@
       <xsl:with-param name="prefix" select="'gml'"/>
     </xsl:call-template>
   </xsl:template>
+
+<!-- ================================================================= -->
+
+  <xsl:template name="addCurrentUserAsParty">
+              <cit:party>
+                <cit:CI_Organisation>
+                  <cit:name xlink:href="local://xml.metadata.get?uuid=urn:abares:organisationname:1"/>
+                  <!-- <cit:contactInfo xlink:href="local://xml.metadata.get?uuid=urn:abares:contact:1"/> -->
+                  <cit:individual>
+                    <cit:CI_Individual>
+                      <cit:name>
+                        <gco:CharacterString><xsl:value-of select="concat(/root/env/user/details/record/surname,', ',/root/env/user/details/record/name)"/></gco:CharacterString>
+                      </cit:name>
+                    </cit:CI_Individual>
+                  </cit:individual>
+                </cit:CI_Organisation>
+              </cit:party>
+  </xsl:template>
+
+<!-- ================================================================= -->
   
   <!-- copy everything else as is -->
   
