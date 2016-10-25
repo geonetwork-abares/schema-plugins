@@ -456,6 +456,10 @@
 		<label>Party</label>
 		<description iso="true">Information about the party</description>
 	</element>
+  <element name="cit:party" id="379.1">
+		<label>Party</label>
+		<description iso="true">Information about the party</description>
+	</element>
 	<element name="cit:extent" id="378.0" context="cit:CI_Responsibility">
 		<label>Extent</label>
 		<description iso="true">Spatial or temporal extent of the role</description>
@@ -1546,7 +1550,7 @@
 		<condition>mandatory</condition>
 	</element>
 	<element name="mri:distance" id="61.0">
-		<label>Distance</label>
+		<label>Spatial Resolution Distance</label>
 		<description>Ground sample distance</description>
 		<condition>Provide a distance if no equivalent Scale is documented</condition>
 		<helper relAtt="uom">
@@ -2733,10 +2737,12 @@
 		<label>Resolution</label>
 		<description>Degree of detail in the grid dataset</description>
 	</element>
+<!--
   <element name="mri:distance">
     <label>Horizontal ground sample distance</label>
     <description>Horizontal ground sample distance</description>
   </element>
+-->
   <element name="mri:vertical">
     <label>Vertical sampling distance</label>
     <description>Vertical sampling distance</description>

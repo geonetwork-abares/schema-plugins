@@ -91,6 +91,10 @@
 	<resourceType>Type</resourceType>
   <provenance>Provenance</provenance>
 
+<!-- TAB 3 -->
+  <responsibility>Responsibility</responsibility>
+  <resourceContactInfo>Point of contact</resourceContactInfo>
+
 <!-- TAB 4 -->
   <product>Product</product>
   <productWithFormat>Product with Online Reference</productWithFormat>
@@ -106,6 +110,9 @@
 <!-- TAB 8 -->
   <geographicIdentifier>Geographic Identifier</geographicIdentifier>
   <geographicBoundingBox>Geographic Bounding Box</geographicBoundingBox>
+
+<!-- TAB 9 -->
+  <addSpatialResolution>Spatial Resolution</addSpatialResolution>
  
 <!-- TAB 10 -->
   <metadataInfo>Metadata Info</metadataInfo>
@@ -123,7 +130,7 @@
 	<optionality>Optional?</optionality>
 	<repeatability>Repeatable?</repeatability>
 
-  <useAssociatedResourcesForParentMetadata><span>If a parent metadata record is needed then select it using the "<i class="fa fa-link"></i><i class="icon-external-link"></i> Associated resources" panel at the right hand side of the form.</span></useAssociatedResourcesForParentMetadata>
+  <useAssociatedResourcesForParentMetadata><span>If a parent metadata record is needed then select "<i class="fa fa-sitemap"></i><i class="icon-external-link"></i> Link to parent" using the "<i class="fa fa-link"></i><i class="icon-external-link"></i> Associated resources" panel at the right hand side of the form.</span></useAssociatedResourcesForParentMetadata>
 
   <saveAndContinue><span>After setting the "Spatial representation type", please <b>Save</b> the record and fill out the spatial representation information.</span></saveAndContinue>
 </strings>

@@ -72,12 +72,12 @@
 
     <!-- Probably don't need to use the organisation-entry-selector - instead use the directory-entry-selector
          without a data-variables attribute and filter on both cit:CI_Organisation and cit:CI_Individual -->
-        <for name="cit:party" addDirective="data-gn-organisation-entry-selector">
-              <directiveAttributes data-schema="iso19115-3"
-                                   data-root="cit:CI_Individual or cit:CI_Organisation"/>
-        </for>
-    -->
-        
+    <for name="cit:party" addDirective="data-gn-organisation-entry-selector">
+        <directiveAttributes data-schema="iso19115-3"
+                             data-root="cit:CI_Individual or cit:CI_Organisation"/>
+    </for>
+    
+<!--    
     <for name="mdb:contact" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="false"
                               data-template-type="contact"
@@ -92,20 +92,22 @@
     </for>
     <for name="mco:addressee" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
-                              data-template-type="addressee"
-                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
-                              data-variables="cit:role/cit:CI_RoleCode/@codeListValue~{role}"/>
+                              data-template-type="contact"
+                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Organisation or cit:CI_Individual&#34;}"
+                              data-variables=""/>
     </for>
+-->
     <for name="mco:reference" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="license"
-                              data-filter="{&#34;_root&#34;: &#34;mco:CI_Citation&#34;}"
+                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Citation&#34;}"
                               data-variables=""/>
     </for>
+<!--
     <for name="mrd:distributorContact" addDirective="data-gn-directory-entry-selector">
          <directiveAttributes data-schema="iso19115-3" data-template-add-action="true"
                               data-template-type="contact"
-                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Responsibility&#34;}"
+                              data-filter="{&#34;_root&#34;: &#34;cit:CI_Organisation or cit:CI_Individual&#34;}"
                               data-variables=""/>
     </for>
     <for name="cit:citedResponsibleParty" addDirective="data-gn-directory-entry-selector">
@@ -114,6 +116,7 @@
                               data-filter="{&#34;_root&#34;: &#34;cit:CI_Organisation or cit:CI_Individual&#34;}"
                               data-variables=""/>
     </for>
+-->
 
     <for name="mri:descriptiveKeywords" addDirective="data-gn-thesaurus-selector">
          <directiveAttributes data-transformation="to-iso19115-3-keyword"/>
@@ -166,6 +169,9 @@
       <name>gex:geographicIdentifier</name>
       <name>msr:axisDimensionProperties</name>
       <name>msr:geometricObjects</name>
+      <name>mco:reference</name>
+      <name>mco:addressee</name>
+      <name>cit:series</name>
   </fieldsWithFieldset>
 
   <multilingualFields>
@@ -196,17 +202,37 @@
          <tab id="resourceIdentification" default="true" mode="flat">
             <section name=" ">
                 <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:title"/>
+                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:alternateTitle"
+                       or="alternateTitle"
+                       in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/>
                 <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:date"
                       or="date"
                       in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/>
                 <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:edition"
                        or="edition"
                        in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/> 
-                 <!-- ASK: TODO: Add series but we may need either a fieldsWithFieldSet and/or an Add Action to
-                            restrict what is shown -->
-                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:series"
+                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:series"/>
+										<action type="add" name="series" 
                        or="series"
-                       in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/> 
+                       in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"> 
+                        <template>
+                            <snippet>
+                               <cit:series>
+                                   <cit:CI_Series>
+                                      <cit:name>
+                                         <gco:CharacterString/>
+                                      </cit:name>
+                                      <cit:issueIdentification>
+                                         <gco:CharacterString/>
+                                      </cit:issueIdentification>
+                                      <cit:page>
+                                         <gco:CharacterString/>
+                                      </cit:page>
+                                   </cit:CI_Series>
+                               </cit:series>
+                            </snippet>
+                        </template>
+                    </action>
                 <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:ISBN"
                        or="ISBN"
                        in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/> 
@@ -252,12 +278,38 @@
 <!-- TAB 3 -->
          <tab id="responsibilities" mode="flat">
             <section name=" ">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact"
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact"/>
+                  <action type="add" name="resourceContactInfo" forceLabel="true"
                       or="pointOfContact"
-                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification"/>
-                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty"
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
+                      <template>
+                        <snippet>
+                          <mri:pointOfContact>
+                            <cit:CI_Responsibility>
+                              <cit:role>
+                                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue=""/>
+                              </cit:role>
+                            </cit:CI_Responsibility>
+                          </mri:pointOfContact>
+                        </snippet>
+                      </template>
+                    </action>
+                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty"/>
+                  <action type="add" name="responsibility" forceLabel="true"
                       or="citedResponsibleParty"
-                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/>
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation">
+                      <template>
+                        <snippet>
+                          <cit:citedResponsibleParty>
+                            <cit:CI_Responsibility>
+                              <cit:role>
+                                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue=""/>
+                              </cit:role>
+                            </cit:CI_Responsibility>
+                          </cit:citedResponsibleParty>
+                        </snippet>
+                      </template>
+                    </action>
             </section>
          </tab>
 
@@ -283,6 +335,13 @@
                            </mrd:distributionFormat>
                            <mrd:distributor>
                               <mrd:MD_Distributor>
+                                <mrd:distributorContact>
+                                  <cit:CI_Responsibility>
+                                    <cit:role>
+                                      <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="distributor">distributor</cit:CI_RoleCode>
+                                    </cit:role>
+                                  </cit:CI_Responsibility>
+                                </mrd:distributorContact>
                               </mrd:MD_Distributor>
                             </mrd:distributor>
                             <mrd:transferOptions>
@@ -375,7 +434,7 @@
                     </action>
              </section>
              <!-- TODO: Cannot eliminate mco:reference from the following because it has been made a
-                        flatModeException -->
+                        flatModeException - -->
              <section name=" ">
                <field name="securityConstraints" xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints[mco:MD_SecurityConstraints]"/>
                     <action type="add" name="securityConstraints"
@@ -510,20 +569,37 @@
          <tab id="resourceSpatial" mode="flat"
               displayIfRecord="count(mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[@codeListValue=('','dataset','series')]) &gt; 0">
             <section name=" ">
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialResolution/mri:MD_Resolution/mri:distance"
-                      or="distance"
-                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialResolution/mri:MD_Resolution"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialResolution"/>
+                  <action type="add" name="addSpatialResolution" forceLabel="true"
+                          or="spatialResolution"
+                          in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
+                     <template>
+                        <snippet>
+                           <mri:spatialResolution>
+                             <mri:MD_Resolution>
+                               <mri:distance>
+                                 <gco:Distance uom="metres"/>
+                               </mri:distance>
+                             </mri:MD_Resolution>
+                           </mri:spatialResolution>
+                        </snippet>
+                     </template>
+                  </action>
                <field xpath="/mdb:MD_Metadata/mdb:referenceSystemInfo" 
                       or="referenceSystemInfo" 
                       in="/mdb:MD_Metadata"/>
-               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType"
+                      or="spatialRepresentationType"
+                      in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification"/>
                <text ref="saveAndContinue" if="count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation) = 0 and count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation) = 0"/>
             </section>
             <section name="msr:MD_GridSpatialRepresentation" if="count(mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType/mcc:MD_SpatialRepresentationTypeCode[@codeListValue='grid']) > 0">
                   <action type="add" name="addGridSpatialRepresentation"
                           or="spatialRepresentationInfo"
-                          in="/mdb:MD_Metadata"
+                          in="/mdb:MD_Metadata">
+<!--
                           if="count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_GridSpatialRepresentation) = 0">
+-->
                       <template>
                          <snippet>
                             <mdb:spatialRepresentationInfo>
@@ -568,8 +644,10 @@
             <section name="msr:MD_VectorSpatialRepresentation" if="count(mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:spatialRepresentationType/mcc:MD_SpatialRepresentationTypeCode[@codeListValue='vector']) > 0">
                   <action type="add" name="addVectorSpatialRepresentation"
                           or="spatialRepresentationInfo"
-                          in="/mdb:MD_Metadata"
+                          in="/mdb:MD_Metadata">
+<!--
                           if="count(mdb:MD_Metadata/mdb:spatialRepresentationInfo/msr:MD_VectorSpatialRepresentation) = 0">
+-->
                       <template>
                          <snippet>
                             <mdb:spatialRepresentationInfo>
@@ -630,6 +708,7 @@
             <for name="mrd:distributorContact"/>
             <for name="mco:addressee"/>
             <for name="mco:reference"/>
+            <for name="mco:useLimitation"/>
             <for name="gex:geographicIdentifier"/>
       </flatModeExceptions>
     </view>
