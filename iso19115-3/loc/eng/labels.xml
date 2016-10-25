@@ -1549,6 +1549,14 @@
 		<description>Number of elements along the axis</description>
 		<condition>mandatory</condition>
 	</element>
+	<element name="msr:dimensionTitle" id="181.1">
+		<label>Dimension Title</label>
+		<description>Title of the axis</description>
+	</element>
+	<element name="msr:dimensionDescription" id="181.2">
+		<label>Dimension Description</label>
+		<description>Description of the axis</description>
+	</element>
 	<element name="mri:distance" id="61.0">
 		<label>Spatial Resolution Distance</label>
 		<description>Ground sample distance</description>
@@ -2691,13 +2699,13 @@
       <condition/>
   	</element>
   	<element name="mco:addressee" id="115.0" context="mco:MD_Releasability">
-      <label>Addressee</label>
+      <label>Recipient</label>
       <description iso="true">party to which the release statement applies</description>
       <help></help>
       <condition/>
   	</element>
   	<element name="mco:addressee" id="115.1">
-      <label>Addressee</label>
+      <label>Recipient</label>
       <description iso="true">party to which the release statement applies</description>
       <help></help>
       <condition/>

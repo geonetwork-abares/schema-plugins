@@ -206,16 +206,6 @@
                </mri:thesaurusName>
             </mri:MD_Keywords>
          </mri:descriptiveKeywords>
-         <mri:descriptiveKeywords>
-            <mri:MD_Keywords>
-               <mri:keyword gco:nilReason="missing">
-                  <gco:CharacterString/>
-               </mri:keyword>
-               <mri:type>
-                  <mri:MD_KeywordTypeCode codeList="codeListLocation#MD_KeywordTypeCode" codeListValue=""/>
-               </mri:type>
-            </mri:MD_Keywords>
-         </mri:descriptiveKeywords>
          <mri:resourceConstraints> 
             <mco:MD_Constraints>
                <mco:releasability>

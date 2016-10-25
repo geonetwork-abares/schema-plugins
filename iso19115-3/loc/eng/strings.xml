@@ -41,11 +41,9 @@
 	<pointOfContact>Resource Contact</pointOfContact>
 	<contact>Metadata Contact</contact>
 
-	<source>Source</source>
   <!-- Leave it blank - Identification is the name we want and it is tacked on automagically -->
 	<resourceIdentification></resourceIdentification>
 
-	<metadataScope>Type of Resource</metadataScope>
 
 
 	<resourceQuality>Resource Quality</resourceQuality>
@@ -91,6 +89,10 @@
 	<resourceType>Type</resourceType>
   <provenance>Provenance</provenance>
 
+<!-- TAB 1 -->
+  <series>Series</series>
+	<metadataScope>Add Product Type</metadataScope>
+
 <!-- TAB 3 -->
   <responsibility>Responsibility</responsibility>
   <resourceContactInfo>Point of contact</resourceContactInfo>
@@ -107,12 +109,20 @@
   <userNote>User Note</userNote>
   <handlingDescription>Handling Description</handlingDescription>
 
+<!-- TAB 7 -->
+	<source>Source</source>
+
 <!-- TAB 8 -->
   <geographicIdentifier>Geographic Identifier</geographicIdentifier>
   <geographicBoundingBox>Geographic Bounding Box</geographicBoundingBox>
+  <temporalExtent>Temporal Extent</temporalExtent>
 
 <!-- TAB 9 -->
   <addSpatialResolution>Spatial Resolution</addSpatialResolution>
+  <addGridSpatialRepresentation>Add Grid Spatial Representation</addGridSpatialRepresentation>
+  <addVectorSpatialRepresentation>Add Vector Spatial Representation</addVectorSpatialRepresentation>
+  <axisDimensionProperties>Axis Dimension Properties</axisDimensionProperties>
+  <geometricObjects>Geometric Objects</geometricObjects>
  
 <!-- TAB 10 -->
   <metadataInfo>Metadata Info</metadataInfo>
