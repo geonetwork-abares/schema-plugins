@@ -272,34 +272,37 @@
 
 		<ul>
 			<li style="list-style-type: none;"><xsl:value-of select="$organisationName"/></li>
-			<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:deliveryPoint/gco:CharacterString"/></li>
-			<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:city/gco:CharacterString"/></li>
-			<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:administrativeArea/gco:CharacterString"/></li>
-			<li style="list-style-type: none;"><xsl:value-of select="concat(descendant::cit:country/gco:CharacterString,' ',descendant::cit:postalCode/gco:CharacterString)"/></li>
-			<xsl:if test="normalize-space(descendant::cit:electronicMailAddress/gco:CharacterString)">
-				<li style="list-style-type: none;"><xsl:value-of select="concat('Email: ',descendant::cit:electronicMailAddress/gco:CharacterString)"/></li>
-			</xsl:if>
-			<xsl:if test="normalize-space(descendant::cit:voice/gco:CharacterString)">
-				<li style="list-style-type: none;"><xsl:value-of select="concat('Phone: ',descendant::cit:voice/gco:CharacterString)"/></li>
-			</xsl:if>
+      <xsl:for-each select="descendant::cit:address">
+				<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:deliveryPoint/gco:CharacterString"/></li>
+				<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:city/gco:CharacterString"/></li>
+				<li style="list-style-type: none;"><xsl:value-of select="descendant::cit:administrativeArea/gco:CharacterString"/></li>
+				<li style="list-style-type: none;"><xsl:value-of select="concat(descendant::cit:country/gco:CharacterString,' ',descendant::cit:postalCode/gco:CharacterString)"/></li>
+				<xsl:if test="normalize-space(descendant::cit:electronicMailAddress/gco:CharacterString)">
+					<li style="list-style-type: none;"><xsl:value-of select="concat('Email: ',descendant::cit:electronicMailAddress/gco:CharacterString)"/></li>
+				</xsl:if>
+      </xsl:for-each>
+      <xsl:for-each select="descendant::cit:phone[cit:numberType/@codeListValue='voice']">
+			  <xsl:if test="normalize-space(descendant::cit:number/gco:CharacterString)">
+				  <li style="list-style-type: none;"><xsl:value-of select="concat('Phone: ',descendant::cit:number/gco:CharacterString)"/></li>
+			  </xsl:if>
+      </xsl:for-each>
 		</ul>
 	</xsl:template>
 
   <!-- XLINK'd cit:party 
-	 eg. <cit:party xlink:href="http://test.cmar.csiro.au:80/geonetwork/srv/eng/subtemplate?uuid=urn:marlin.csiro.au:person:958_person_organisation&amp;process=undefined">
+	 eg. <cit:party xlink:href="local://xml.metadata.get?uuid=urn:marlin.csiro.au:person:958_person_organisation">
 	       ....
 	     </cit:party>
 	-->
-  <xsl:template mode="mode-iso19115-3" match="mri:pointOfContact[@xlink:href!='']|mdb:contact[@xlink:href!='']" priority="33000">
+  <xsl:template mode="mode-iso19115-3" match="cit:party[@xlink:href!='']" priority="33000">
     <xsl:param name="schema" select="'iso19115-3'" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
-		<xsl:variable name="organisationName" select="*/cit:party/*/cit:name/*"/>
+		<xsl:variable name="organisationName" select="*/cit:name/*"/>
 		<fieldset>
 			<legend><xsl:value-of select="gn-fn-metadata:getLabel($schema, name(), $labels)/label"/></legend>
-			<xsl:apply-templates mode="party-html" select="*/cit:party/*/cit:individual"/>
-				<!-- NOTE: Show only the first address in the contact info SP Nov. 2015 -->
-			<xsl:apply-templates mode="party-html" select="*/cit:party/*/cit:contactInfo[1]">
+			<xsl:apply-templates mode="party-html" select="*/cit:individual"/>
+			<xsl:apply-templates mode="party-html" select="*/cit:contactInfo">
 				<xsl:with-param name="organisationName" select="$organisationName"/>
 			</xsl:apply-templates>
 		</fieldset>
