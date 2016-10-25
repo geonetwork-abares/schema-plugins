@@ -173,6 +173,7 @@
       <name>mco:reference</name>
       <name>mco:addressee</name>
       <name>cit:series</name>
+      <name>cit:contactInfo</name>
   </fieldsWithFieldset>
 
   <fieldsWithAttributes>
