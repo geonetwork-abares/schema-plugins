@@ -175,6 +175,11 @@
       <name>cit:series</name>
   </fieldsWithFieldset>
 
+  <fieldsWithAttributes>
+      <name>gco:Distance</name>
+      <name>gco:Measure</name>
+  </fieldsWithAttributes>
+
   <multilingualFields>
     <!-- In multilingual mode, define which mode
     the widget should have. If expanded, then one

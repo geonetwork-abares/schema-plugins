@@ -157,9 +157,12 @@
     <xsl:variable name="isMultilingualElementExpanded"
                   select="count($editorConfig/editor/multilingualFields/expanded[name = $elementName]) > 0"/>
 
-    <!-- For some fields, always display attributes.
-    TODO: move to editor config ? -->
-    <xsl:variable name="forceDisplayAttributes" select="false()"/>
+    <!-- For some fields, always display attributes. Get from the editor config which has 
+         fieldsWithAttributes name = $childName -->
+    <xsl:variable name="childName" select="name(gco:*)"/>
+    <xsl:variable name="forceDisplayAttributes" select="count($editorConfig/editor/fieldsWithAttributes/name[string()=$childName and (@context=$elementName or normalize-space(@context)='')]) > 0"/>
+
+    <!-- <xsl:message>Checked attributes on <xsl:value-of select="concat($childName,' with context ',$elementName)"/> found <xsl:value-of select="$forceDisplayAttributes"/></xsl:message> -->
 
     <!-- TODO: Support gmd:LocalisedCharacterString -->
     <xsl:variable name="theElement" select="gco:CharacterString|gco:Integer|gco:Decimal|
