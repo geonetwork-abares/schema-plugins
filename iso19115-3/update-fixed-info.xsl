@@ -78,15 +78,24 @@
               <xsl:call-template name="addCurrentUserAsParty"/>
             </cit:CI_Responsibility>
           </mdb:contact>
-          <mdb:contact>
-            <cit:CI_Responsibility>
-              <cit:role>
-                <cit:CI_RoleCode codeList="{concat($codeListLocation,'#CI_RoleCode')}" codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
-              </cit:role>
-              <cit:party xlink:href="local://xml.metadata.get?uuid=urn:abares:individual:1"/>
-            </cit:CI_Responsibility>
-          </mdb:contact>
-          <xsl:apply-templates select="mdb:contact[cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='author' and cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='pointOfContact']"/>
+          <xsl:choose>
+            <!-- if no custodian, make ABARES the custodian -->
+            <xsl:when test="not(/mdb:MD_Metadata/mdb:contact[cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='custodian'])">
+              <mdb:contact>
+                <cit:CI_Responsibility>
+                  <cit:role>
+                    <cit:CI_RoleCode codeList="{concat($codeListLocation,'#CI_RoleCode')}" codeListValue="custodian">pointOfContact</cit:CI_RoleCode>
+                  </cit:role>
+                  <cit:party xlink:href="local://xml.metadata.get?uuid=urn:abares:individual:1"/>
+                </cit:CI_Responsibility>
+              </mdb:contact>
+            </xsl:when>
+            <!-- keep the current custodian -->
+            <xsl:otherwise>
+              <xsl:apply-templates select="mdb:contact[cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='custodian']"/>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:apply-templates select="mdb:contact[cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='author' and cit:CI_Responsibility/cit:role/cit:CI_RoleCode!='custodian']"/>
         </xsl:when>
         <!-- Add current user as author and TODO: not already present -->
         <xsl:otherwise>

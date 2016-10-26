@@ -35,6 +35,7 @@
       <for name="mrd:orderingInstructions" use="textarea"/>
       <for name="mco:otherConstraints" use="textarea"/>
       <for name="mrl:description" use="textarea"/>
+      <for name="mrd:description" use="textarea"/>
       <for name="mrl:statement" use="textarea"/>
       <for name="mri:supplementalInformation" use="textarea"/>
       <for name="mri:specificUsage" use="textarea"/>
@@ -174,6 +175,10 @@
       <name>mco:addressee</name>
       <name>cit:series</name>
       <name>cit:contactInfo</name>
+      <name>mrd:distributorTransferOptions</name>
+      <name>cit:telephone</name>
+      <name>cit:address</name>
+      <name>cit:onlineResource</name>
   </fieldsWithFieldset>
 
   <fieldsWithAttributes>
@@ -334,6 +339,9 @@
                        <snippet>
                          <mdb:distributionInfo>
                            <mrd:MD_Distribution>
+                           <mrd:description>
+                              <gco:CharacterString></gco:CharacterString>
+                           </mrd:description>
                            <mrd:distributionFormat>
                                <mrd:MD_Format>
                                   <mrd:formatSpecificationCitation>
@@ -344,6 +352,9 @@
                                            <cit:edition>
                                                <gco:CharacterString></gco:CharacterString>
                                            </cit:edition>
+                                           <cit:editionDate>
+                                               <gco:Date></gco:Date>
+                                           </cit:editionDate>
                                        </cit:CI_Citation>
                                   </mrd:formatSpecificationCitation>
                                   <mrd:formatDistributor>
@@ -357,6 +368,9 @@
                                        </mrd:distributorContact>
                                        <mrd:distributorTransferOptions>
                                          <mrd:MD_DigitalTransferOptions>
+                                           <mrd:transferSize>
+                                              <gco:Real/>
+                                           </mrd:transferSize>
                                            <mrd:onLine>
                                              <cit:CI_OnlineResource>
                                                <cit:linkage>
@@ -365,6 +379,9 @@
                                                <cit:protocol>
                                                  <gco:CharacterString></gco:CharacterString>
                                                </cit:protocol>
+                                               <cit:name>
+                                                 <gco:CharacterString/>
+                                               </cit:name>
                                                <cit:function>
                                                  <cit:CI_OnLineFunctionCode codeList="codeListLocation#cit:CI_OnLineFunctionCode" codeListValue=""/>
                                                </cit:function>
@@ -719,12 +736,14 @@
             <for name="cit:CI_Organisation"/>
             <for name="mrl:LI_Lineage"/>
             <for name="mrd:distributorContact"/>
+            <for name="mrd:distributorTransferOptions"/>
             <for name="mco:addressee"/>
             <for name="mco:reference"     context="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
             <for name="mco:useLimitation" context="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
             <for name="gex:geographicIdentifier"/>
             <for name="msr:dimensionTitle"/>
             <for name="msr:dimensionDescription"/>
+            <for name="mrd:transferSize"/>
       </flatModeExceptions>
     </view>
 

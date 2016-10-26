@@ -88,6 +88,13 @@
       <mri:status>
         <mcc:MD_ProgressCode codeList="codeListLocation#MD_ProgressCode" codeListValue=""/>
       </mri:status>
+      <mri:pointOfContact xmlns:gn="http://www.fao.org/geonetwork">
+         <cit:CI_Responsibility>
+            <cit:role>
+              <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="pointOfContact"/>
+            </cit:role>
+         </cit:CI_Responsibility>
+      </mri:pointOfContact>
       <mri:spatialRepresentationType>
         <mcc:MD_SpatialRepresentationTypeCode codeList="codeListLocation#MD_SpatialRepresentationTypeCode"
           codeListValue=""/>
@@ -206,6 +213,16 @@
                </mri:thesaurusName>
             </mri:MD_Keywords>
          </mri:descriptiveKeywords>
+         <mri:descriptiveKeywords>
+            <mri:MD_Keywords>
+               <mri:keyword>
+                  <gco:CharacterString></gco:CharacterString>
+               </mri:keyword>
+               <mri:type>
+                  <mri:MD_KeywordTypeCode codeList="codeListLocation#MD_KeywordTypeCode" codeListValue="theme"/>
+               </mri:type>
+            </mri:MD_Keywords>
+         </mri:descriptiveKeywords>
          <mri:resourceConstraints> 
             <mco:MD_Constraints>
                <mco:releasability>
@@ -227,19 +244,6 @@
                </mco:useLimitation>
             </mco:MD_LegalConstraints>
          </mri:resourceConstraints>
-         <mri:resourceConstraints>
-            <mco:MD_SecurityConstraints>
-               <mco:classification>
-                  <mco:MD_ClassificationCode codeList="codeListLocation#MD_ClassificationCode" codeListValue=""/>
-               </mco:classification>
-               <mco:userNote>
-                  <gco:CharacterString/>
-               </mco:userNote>
-               <mco:handlingDescription>
-                  <gco:CharacterString/>
-               </mco:handlingDescription>
-            </mco:MD_SecurityConstraints>
-         </mri:resourceConstraints>
       <mri:defaultLocale>
         <lan:PT_Locale>
           <lan:language>
@@ -255,7 +259,10 @@
   </mdb:identificationInfo>
   <mdb:distributionInfo>
     <mrd:MD_Distribution>
-      <mrd:distributionFormat>
+                           <mrd:description>
+                              <gco:CharacterString></gco:CharacterString>
+                           </mrd:description>
+                           <mrd:distributionFormat>
                                <mrd:MD_Format>
                                   <mrd:formatSpecificationCitation>
                                        <cit:CI_Citation>
@@ -265,6 +272,9 @@
                                            <cit:edition>
                                                <gco:CharacterString></gco:CharacterString>
                                            </cit:edition>
+                                           <cit:editionDate>
+                                               <gco:Date></gco:Date>
+                                           </cit:editionDate>
                                        </cit:CI_Citation>
                                   </mrd:formatSpecificationCitation>
                                   <mrd:formatDistributor>
@@ -278,6 +288,9 @@
                                        </mrd:distributorContact>
                                        <mrd:distributorTransferOptions>
                                          <mrd:MD_DigitalTransferOptions>
+                                           <mrd:transferSize>
+                                              <gco:Real/>
+                                           </mrd:transferSize>
                                            <mrd:onLine>
                                              <cit:CI_OnlineResource>
                                                <cit:linkage>
@@ -286,6 +299,9 @@
                                                <cit:protocol>
                                                  <gco:CharacterString></gco:CharacterString>
                                                </cit:protocol>
+                                               <cit:name>
+                                                 <gco:CharacterString/>
+                                               </cit:name>
                                                <cit:function>
                                                  <cit:CI_OnLineFunctionCode codeList="codeListLocation#cit:CI_OnLineFunctionCode" codeListValue=""/>
                                                </cit:function>
