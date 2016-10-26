@@ -129,6 +129,9 @@
  
 <!-- TAB 10 -->
   <metadataInfo>Metadata Info</metadataInfo>
+  <metadataReleasability>Metadata Releasability</metadataReleasability>
+  <metadataLegalConstraints>Metadata Legal Constraints</metadataLegalConstraints>
+  <metadataSecurityConstraints>Metadata Security Constraints</metadataSecurityConstraints>
  
 	<!-- Service stuff -->
 	<serviceDescription>Description</serviceDescription>

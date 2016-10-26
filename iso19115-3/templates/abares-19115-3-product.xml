@@ -325,11 +325,4 @@
       </mrl:statement>
     </mrl:LI_Lineage>
   </mdb:resourceLineage>
-	<mdb:metadataConstraints>
-      <mco:MD_SecurityConstraints>
-         <mco:classification>
-            <mco:MD_ClassificationCode codeList="codeListLocation#MD_ClassificationCode" codeListValue="unclassified"/>
-         </mco:classification>
-      </mco:MD_SecurityConstraints>
-   </mdb:metadataConstraints>
 </mdb:MD_Metadata>

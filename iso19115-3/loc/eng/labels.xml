@@ -907,8 +907,13 @@
 		<description>Restrictions and legal prerequisites for accessing and using the resource or
             metadata</description>
 	</element>
-	<element name="mco:MD_LegalConstraints" context="mco:resourceConstraints" id="69.1">
-		<label>Legal constraints</label>
+	<element name="mco:MD_LegalConstraints" context="mdb:metadataConstraints" id="69.2">
+		<label>Metadata Legal constraints</label>
+		<description>Restrictions and legal prerequisites for accessing and using the resource or
+            metadata</description>
+	</element>
+	<element name="mco:MD_LegalConstraints" context="mri:resourceConstraints" id="69.1">
+		<label>Resource Legal constraints</label>
 		<description>Restrictions and legal prerequisites for accessing and using the resource or
             metadata</description>
 	</element>
@@ -966,6 +971,16 @@
   </element>
 	<element name="mco:MD_SecurityConstraints" id="73.0">
 		<label>Security constraints</label>
+		<description>Handling restrictions imposed on the resource or metadata for national security
+            or similar security concerns</description>
+	</element>
+	<element name="mco:MD_SecurityConstraints" context="mdb:metadataConstraints" id="73.1">
+		<label>Metadata Security constraints</label>
+		<description>Handling restrictions imposed on the resource or metadata for national security
+            or similar security concerns</description>
+	</element>
+	<element name="mco:MD_SecurityConstraints" context="mri:resourceConstraints" id="73.1">
+		<label>Resource Security constraints</label>
 		<description>Handling restrictions imposed on the resource or metadata for national security
             or similar security concerns</description>
 	</element>
@@ -2675,6 +2690,16 @@
     	<description iso="true">information concerning the parties to whom the resource can or cannot be released</description>
     	<help></help>
     	<condition/>
+  	</element>
+  	<element name="mco:releasability" context="mdb:metadataConstraints" id="103.1" >
+    	<label>Resource Releasability</label>
+    	<description iso="true">information concerning the parties to whom the resource can or cannot be released</description>
+    	<help></help>
+  	</element>
+  	<element name="mco:releasability" context="mdb:metadataConstraints" id="103.2" >
+    	<label>Metadata Releasability</label>
+    	<description iso="true">information concerning the parties to whom the resource can or cannot be released</description>
+    	<help></help>
   	</element>
   	<element name="mco:responsibleParty" id="104.0">
     	<label>Party responsible</label>

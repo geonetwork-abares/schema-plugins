@@ -489,8 +489,6 @@
                         </template>
                     </action>
              </section>
-             <!-- TODO: Cannot eliminate mco:reference from the following because it has been made a
-                        flatModeException - -->
              <section name=" ">
                <field name="securityConstraints" xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints[mco:MD_SecurityConstraints]"/>
                     <action type="add" name="securityConstraints" forceLabel="true"
@@ -748,7 +746,76 @@
              <section name=" ">
                 <text ref="useAssociatedResourcesForParentMetadata"/>
                 <field xpath="/mdb:MD_Metadata/mdb:contact" or="contact" in="/mdb:MD_Metadata"/>
-                <field xpath="/mdb:MD_Metadata/mdb:metadataConstraints" or="metadataConstraints" in="/mdb:MD_Metadata"/>
+             </section>
+             <section name=" ">
+                  <field name="metadataReleasability" xpath="/mdb:MD_Metadata/mdb:metadataConstraints/mco:MD_Constraints/mco:releasability" del="../.."/>
+                    <action type="add" name="metadataReleasability" or="metadataConstraints"  forceLabel="true"
+                            in="/mdb:MD_Metadata">
+                        <template>
+                           <!-- exclude mco:addressee from snippet and add mco:addressee as a flat
+                                mode exception - directive will then be used to select addressee -->
+                           <snippet>
+                             <mdb:metadataConstraints> 
+                               <mco:MD_Constraints>
+                                 <mco:releasability>
+                                   <mco:MD_Releasability>
+                                     <mco:statement>
+                                       <gco:CharacterString/>
+                                     </mco:statement>
+                                     <mco:disseminationConstraints>
+                                       <mco:MD_RestrictionCode codeList="codeListLocation#MD_RestrictionCode" codeListValue=""/>
+                                     </mco:disseminationConstraints>
+                                   </mco:MD_Releasability>
+                                </mco:releasability>
+                               </mco:MD_Constraints>
+                             </mdb:metadataConstraints> 
+                           </snippet>
+                        </template>
+                    </action>
+             </section>
+             <section name=" ">
+                  <field name="metadataLegalConstraints" xpath="/mdb:MD_Metadata/mdb:metadataConstraints[mco:MD_LegalConstraints]"/>
+                    <action type="add" name="metadataLegalConstraints" forceLabel="true"
+                            or="metadataConstraints"
+                            in="/mdb:MD_Metadata">
+                        <template>
+                           <!-- exclude mco:reference from snippet and add mco:reference as a flat
+                                mode exception - directive will then be used to select reference -->
+                           <snippet>
+	                           <mdb:metadataConstraints>
+                               <mco:MD_LegalConstraints>
+                                  <mco:useLimitation>
+                                     <gco:CharacterString/>
+                                  </mco:useLimitation>
+                               </mco:MD_LegalConstraints>
+                             </mdb:metadataConstraints>
+                           </snippet>
+                        </template>
+                    </action>
+             </section>
+             <section name=" ">
+                  <field name="metadataSecurityConstraints" xpath="/mdb:MD_Metadata/mdb:metadataConstraints[mco:MD_SecurityConstraints]"/>
+                    <action type="add" name="metadataSecurityConstraints" forceLabel="true"
+                            or="metadataConstraints"
+                            in="/mdb:MD_Metadata">
+                        <template>
+                           <snippet>
+                            <mdb:metadataConstraints>
+                               <mco:MD_SecurityConstraints>
+                                  <mco:classification>
+                                     <mco:MD_ClassificationCode codeList="codeListLocation#MD_ClassificationCode" codeListValue=""/>
+                                  </mco:classification>
+                                  <mco:userNote>
+                                     <gco:CharacterString/>
+                                  </mco:userNote>
+                                  <mco:handlingDescription>
+                                     <gco:CharacterString/>
+                                  </mco:handlingDescription>
+                               </mco:MD_SecurityConstraints>
+                            </mdb:metadataConstraints>
+                           </snippet>
+                        </template>
+                    </action>
              </section>
          </tab>
 
