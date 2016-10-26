@@ -822,6 +822,8 @@
       <!-- Elements that should not use the "flat" mode -->
       <flatModeExceptions>
             <for name="mri:descriptiveKeywords"/>
+            <for name="mrs:referenceSystemIdentifier"/>
+            <for name="mrs:referenceSystemType"/>
             <for name="mri:keyword"/>
             <for name="cit:party"/>
             <for name="cit:CI_Individual"/>
@@ -836,6 +838,7 @@
             <for name="msr:dimensionTitle"/>
             <for name="msr:dimensionDescription"/>
             <for name="mrd:transferSize"/>
+            <for name="mcc:code"/>
       </flatModeExceptions>
     </view>
 
