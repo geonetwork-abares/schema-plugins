@@ -218,6 +218,9 @@
                 <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:edition"
                        or="edition"
                        in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/> 
+                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:editionDate"
+                       or="editionDate"
+                       in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation"/> 
                 <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:series"/>
 										<action type="add" name="series"  forceLabel="true"
                        or="series"
@@ -709,7 +712,6 @@
 
       <!-- Elements that should not use the "flat" mode -->
       <flatModeExceptions>
-            <for name="cit:date"/>
             <for name="mri:descriptiveKeywords"/>
             <for name="mri:keyword"/>
             <for name="cit:party"/>
@@ -718,8 +720,8 @@
             <for name="mrl:LI_Lineage"/>
             <for name="mrd:distributorContact"/>
             <for name="mco:addressee"/>
-            <for name="mco:reference"/>
-            <for name="mco:useLimitation"/>
+            <for name="mco:reference"     context="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
+            <for name="mco:useLimitation" context="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceConstraints/mco:MD_LegalConstraints"/>
             <for name="gex:geographicIdentifier"/>
             <for name="msr:dimensionTitle"/>
             <for name="msr:dimensionDescription"/>

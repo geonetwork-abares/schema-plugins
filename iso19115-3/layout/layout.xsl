@@ -58,7 +58,9 @@
     <xsl:param name="labels" select="$labels" required="no"/>
 
 		<xsl:variable name="name" select="concat(@prefix, ':', @name)"/>
-		<xsl:variable name="flatModeException" select="gn-fn-metadata:getFieldFlatModeException($viewConfig, $name)"/>
+    
+    <xsl:variable name="xpath" select="name(..)"/>
+		<xsl:variable name="flatModeException" select="gn-fn-metadata:getFieldFlatModeExceptionWithContext($viewConfig, $name, $xpath)"/>
 
     <!-- TODO: this should be common to all schemas -->
     <xsl:if test="$isEditing and (not($isFlatMode) or $flatModeException)">
