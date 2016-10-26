@@ -288,6 +288,31 @@
                <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:status"
                       or="status"
                       in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification"/>
+               <field xpath="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:graphicOverview"/>
+                   <action type="add" name="graphicOverview" or="graphicOverview" forceLabel="true"
+                           in="/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification">
+                        <template>
+                            <snippet>
+                                <mri:graphicOverview>
+                                   <mcc:BrowseGraphic>
+                                      <mcc:linkage>
+                                         <cit:CI_OnlineResource>
+                                            <cit:linkage>
+                                               <gco:CharacterString></gco:CharacterString>
+                                            </cit:linkage>
+                                             <cit:name>
+                                               <gco:CharacterString/>
+                                             </cit:name>
+                                             <cit:description>
+                                               <gco:CharacterString></gco:CharacterString>
+                                             </cit:description>
+                                         </cit:CI_OnlineResource>
+                                      </mcc:linkage>
+                                   </mcc:BrowseGraphic>
+                                </mri:graphicOverview>
+                            </snippet>
+                        </template>
+                    </action>
             </section>
          </tab>
 

@@ -93,6 +93,9 @@
   <series>Series</series>
 	<metadataScope>Add Product Type</metadataScope>
 
+<!-- TAB 2 -->
+  <graphicOverview>Graphic Overview</graphicOverview>
+
 <!-- TAB 3 -->
   <responsibility>Responsibility</responsibility>
   <resourceContactInfo>Point of contact</resourceContactInfo>
